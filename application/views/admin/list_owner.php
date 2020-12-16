@@ -17,14 +17,7 @@
                             <th></th>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td>1</td>
-                                <td>Dakota Rice</td>
-                                <td>$36,738</td>
-                                <td>Niger</td>
-                                <td>Niger</td>
-                                <td>Oud-Turnhout</td>
-                            </tr>
+
                         </tbody>
                     </table>
                 </div>
@@ -35,9 +28,28 @@
 <script type="text/javascript" charset="utf-8">
     $(document).ready(function() {
         $('#table_owner').DataTable( {
-            "processing": true,
-            "serverSide": true,
-            "ajax": "scripts/server_processing.php"
+            processing: true,
+            serverSide: true,
+            ordering: true,
+            deferRenderer: true,
+            paging: true,
+            ajax: {
+                url : "<?= base_url('admin/get_owner') ?>",
+                method: "POST"
+            },
+            columns : [
+                {
+                    data : 'id_owner',
+                    render: (data, type, row, meta) => {
+                        return meta.row + meta.settings._iDisplayStart + 1;
+                    }
+                },
+                { data : 'nama_pemilik' },
+                { data : 'alamat_pemilik' },
+                { data : 'notelp_pemilik' },
+                { data : 'email' },
+                { data : 'id_pemilik' }
+            ],
         } );
 
     });

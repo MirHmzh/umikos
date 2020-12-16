@@ -8,6 +8,15 @@ class Owner extends CI_Model {
 		return $this->db->get('tb_pemilik')->result();
 	}
 
+	function get_table($datatable)
+	{
+		$data['total'] = $this->db->count_all_results('tb_pemilik');
+		$this->db->select('tb_pemilik.*, tb_user.email');
+		$this->db->join('tb_user', 'tb_user.id_user = tb_pemilik.user_id', 'left');
+		$data['results'] = $this->db->get('tb_pemilik', $datatable['limit'], $datatable['start'])->result();
+		return $data;
+	}
+
 	function get_where($data, $id)
 	{
 		return $this->db->get_where('tb_pemilik', $data, ['id_pemilik' => $id]);
@@ -15,18 +24,35 @@ class Owner extends CI_Model {
 
 	function insert($data)
 	{
-		$this->db->insert('tb_pemilik', $data);
+		$userdata = ['email' => $data['email'], 'password' => $data['password'], 'role' => 2];
+		unset($data['email']);
+		unset($data['password']);
+		$pemilik = $data;
+		$this->db->insert('tb_user', $userdata);
+		$pemilik['user_id'] = $this->db->insert_id();
+		$this->db->insert('tb_pemilik', $pemilik);
 		return $this->db->insert_id();
 	}
 
 	function update($data, $id)
 	{
-		return $this->db->update('tb_pemilik', $data, ['id_pemilik' => $id]);
+		$userdata = ['email' => $data['email'], 'password' => $data['password']];
+		unset($data['email']);
+		unset($data['password']);
+		$pemilik = $data;
+
+		$trans = $this->db->update('tb_pemilik', $pemilik, ['id_pemilik' => $id]);
+		$pemilik_get = $this->db->get_where('tb_pemilik', ['id_pemilik' => $id])->row();
+		$trans = $this->db->update('tb_user', $userdata, ['id_user' => $pemilik_get->user_id]);
+		return $trans;
 	}
 
 	function delete($id)
 	{
-		return $this->db->delete('tb_pemilik', ['id_pemilik' => $id]);
+		$get = $this->db->get_where('tb_pemilik', ['id_pemilik' => $id])->row();
+		$this->db->delete('tb_user', ['id_user' => $get->user_id]);
+		$trans = $this->db->delete('tb_pemilik', ['id_pemilik' => $id]);
+		return $trans;
 	}
 
 }

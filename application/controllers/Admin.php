@@ -7,6 +7,7 @@ class Admin extends CI_Controller {
 	{
 		parent::__construct();
 		$this->load->model('Kos');
+		$this->load->model('Owner');
 	}
 
 	public function index()
@@ -41,7 +42,12 @@ class Admin extends CI_Controller {
 
 	function form_kos($id = null)
 	{
-		$this->load->view('layout/admin_base', array('content' => 'admin/form_kos'));
+		if ($id) {
+			$content = array('content' => 'admin/form_kos', 'id_kos' => $id);
+		}else{
+			$content = array('content' => 'admin/form_kos');
+		}
+		$this->load->view('layout/admin_base', $content);
 	}
 
 	function save_kos($id = null)
@@ -68,19 +74,53 @@ class Admin extends CI_Controller {
 		$this->load->view('layout/admin_base', array('content' => 'admin/list_owner'));
 	}
 
+	function get_owner()
+	{
+		$col = ['', '', '', '', ''];
+		$requesttable = [
+			'start' => $this->input->post('start'),
+			'limit' => $this->input->post('length'),
+			'search' => $this->input->post('search.value'),
+			'column' => $col[$this->input->post('order[0][column]')],
+			'column_order' => $this->input->post('order[0][dir]')
+		];
+		$kos = $this->Owner->get_table($requesttable);
+		$datatable = [
+			'draw' => $this->input->post('draw'),
+			'recordsTotal' => $kos['total'],
+			'recordsFiltered' => $kos['total'],
+			'data' => $kos['results']
+		];
+		echo json_encode($datatable);
+	}
+
 	function form_owner($id = null)
 	{
-		$this->load->view('layout/admin_base', array('content' => 'admin/form_owner'));
+		if ($id) {
+			$content = array('content' => 'admin/form_owner', 'id_pemilik' => $id);
+		}else{
+			$content = array('content' => 'admin/form_owner');
+		}
+		$this->load->view('layout/admin_base', $content);
 	}
 
 	function save_owner($id = null)
 	{
-
+		$payload = $this->input->post();
+		if ($id) {
+			$trans = $this->Owner->update($payload, $id);
+			$msg = 'Owner telah diperbarui';
+		}else{
+			$trans = $this->Owner->insert($payload);
+			$msg = 'Owner telah ditambahkan';
+		}
+		echo json_encode(['msg' => $msg, 'data' => $trans]);
 	}
 
 	function delete_owner($id)
 	{
-
+		$trans = $this->Owner->delete($id);
+		echo json_encode(['msg' => 'Owner telah dihapus', 'data' => $trans]);
 	}
 
 
