@@ -21,7 +21,7 @@
     <link rel="apple-touch-icon" sizes="76x76" href="<?= base_url() ?>assets/img/apple-icon.png">
     <link rel="icon" type="image/png" href="<?= base_url() ?>assets/img/favicon.ico">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
-    <title>Light Bootstrap Dashboard - Free Bootstrap 4 Admin Dashboard by Creative Tim</title>
+    <title>Owner Indekos | UMIKOS</title>
     <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, shrink-to-fit=no' name='viewport' />
     <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700,200" rel="stylesheet" />
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css" />
@@ -31,6 +31,8 @@
     <link href="<?= base_url() ?>assets/css/datatables.min.css" rel="stylesheet" />
     <link href="<?= base_url() ?>assets/css/leaflet.css" rel="stylesheet" />
     <link href="<?= base_url() ?>assets/css/dropzone.css" rel="stylesheet" />
+    <link href="<?= base_url() ?>assets/css/basic_dropzone.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css" />
 </head>
 <script src="<?= base_url() ?>assets/js/core/jquery.3.2.1.min.js" type="text/javascript"></script>
 <script src="<?= base_url() ?>assets/js/core/popper.min.js" type="text/javascript"></script>
@@ -43,6 +45,7 @@
 <script src="<?= base_url() ?>assets/js/core/datatables.min.js"></script>
 <script src="<?= base_url() ?>assets/js/core/leaflet.js"></script>
 <script src="<?= base_url() ?>assets/js/core/dropzone.js"></script>
+<script src="<?= base_url('assets/js/core/sweetalert.min.js') ?>" type="text/javascript" charset="utf-8"></script>
 <style type="text/css" media="screen">
     .navbar .navbar-nav .nav-item .nav-link{
         color: white;
@@ -89,19 +92,24 @@
             <!-- Navbar -->
             <nav class="navbar navbar-expand-lg " color-on-scroll="500">
                 <div class="container-fluid">
-                    <a class="navbar-brand" href="#pablo"> Dashboard </a>
+                    <a class="navbar-brand" href="#pablo"> UMIKOS </a>
                     <div class="collapse navbar-collapse justify-content-end" id="navigation">
                         <ul class="nav navbar-nav mr-auto">
                             <li class="nav-item">
                                 <a href="#" class="nav-link" data-toggle="dropdown">
-                                    <span class="d-lg-none">Dashboard</span>
+                                    <span class="d-lg-none">UMIKOS</span>
                                 </a>
                             </li>
                         </ul>
                         <ul class="navbar-nav ml-auto">
                             <li class="nav-item">
-                                <a class="nav-link" href="#pablo">
-                                    <span class="no-icon">Account</span>
+                                <a class="nav-link" href="<?= base_url('Main/profile') ?>">
+                                    <span class="no-icon"><?= $this->session->userdata('name'); ?></span>
+                                </a>
+                                <a class="nav-link" href="<?= base_url('Auth/logout') ?>">
+                                    <span class="no-icon">
+                                        <i class="fa fa-power-off"></i>
+                                    </span>
                                 </a>
                             </li>
                         </ul>

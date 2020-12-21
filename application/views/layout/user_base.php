@@ -44,6 +44,8 @@
 	}
 	.side-menu-grabber-wrapper{
 		padding: 0 !important;
+		max-width: 0;
+		max-height: 0;
 	}
 	.side-menu-content-wrapper{
 		background-color: white;
@@ -136,6 +138,9 @@
 	    font-size: 1.2em;
 	    font-weight: 900;
 	}
+	.side-menu-outer{
+		max-width: 25em;
+	}
 </style>
 <body>
 	<div id="main_map">
@@ -164,10 +169,12 @@
 		    	<input class="form-control mr-sm-2" id="cari_kos" type="search" placeholder="Cari Kos atau Alamatmu!" aria-label="Cari Kos atau Alamatmu!">
 		    </form>
 		</div>
-		<span class="owner-wrapper">Owner Kos?</span>
+		<a href="<?= base_url('owner') ?>" title="">
+			<span class="owner-wrapper">Owner Kos?</span>
+		</a>
 	</div>
 	<div class="side-menu">
-		<div class="row">
+		<div class="row side-menu-outer">
 			<div class="col side-menu-grabber-wrapper">
 				<span class="side-menu-grabber">
 					<i class="fas fa-chevron-left"></i>

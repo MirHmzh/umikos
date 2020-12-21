@@ -1,11 +1,12 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Auth extends CI_Model {
+class AuthM extends CI_Model {
 
 	function login($data)
 	{
-		$trans = $this->db->get('tb_user', $data)->row();
+		$this->db->join('tb_pemilik', 'tb_pemilik.user_id = tb_user.id_user', 'left');
+		$trans = $this->db->get_where('tb_user', $data)->row();
 		return $trans;
 	}
 
@@ -24,7 +25,13 @@ class Auth extends CI_Model {
 			'alamat_pemilik' => $data['alamat_pemilik'],
 			'user_id' => $user_id
 		];
-		$this->db->insert('tb_pemilik', $owner_data);
+		$trans = $this->db->insert('tb_pemilik', $owner_data);
+		return $this->db->insert_id();
+	}
+
+	function update($data, $id)
+	{
+		return $this->db->update('tb_user', $data, ['id_user' => $id]);
 	}
 
 }

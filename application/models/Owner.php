@@ -17,9 +17,10 @@ class Owner extends CI_Model {
 		return $data;
 	}
 
-	function get_where($data, $id)
+	function get_where($id)
 	{
-		return $this->db->get_where('tb_pemilik', $data, ['id_pemilik' => $id]);
+		$this->db->join('tb_user', 'tb_user.id_user = tb_pemilik.user_id', 'left');
+		return $this->db->get_where('tb_pemilik', ['id_pemilik' => $id])->row();
 	}
 
 	function insert($data)
@@ -36,7 +37,11 @@ class Owner extends CI_Model {
 
 	function update($data, $id)
 	{
-		$userdata = ['email' => $data['email'], 'password' => $data['password']];
+		if ($data['password'] == '') {
+			$userdata = ['email' => $data['email']];
+		}else{
+			$userdata = ['email' => $data['email'], 'password' => $data['password']];
+		}
 		unset($data['email']);
 		unset($data['password']);
 		$pemilik = $data;
@@ -50,6 +55,7 @@ class Owner extends CI_Model {
 	function delete($id)
 	{
 		$get = $this->db->get_where('tb_pemilik', ['id_pemilik' => $id])->row();
+		$this->db->delete('tb_indekos', ['id_pemilik' => $id]);
 		$this->db->delete('tb_user', ['id_user' => $get->user_id]);
 		$trans = $this->db->delete('tb_pemilik', ['id_pemilik' => $id]);
 		return $trans;

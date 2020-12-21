@@ -4,7 +4,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 class Kos extends CI_Model {
 
 	function get(){
-		return $this->db->get('tb_indekos')->row();
+		$this->db->join('tb_pemilik', 'tb_pemilik.id_pemilik = tb_indekos.id_pemilik', 'left');
+		return $this->db->get('tb_indekos')->result();
 	}
 
 	function get_table($datatable)
@@ -16,9 +17,10 @@ class Kos extends CI_Model {
 		return $data;
 	}
 
-	function get_where($where)
+	function get_where($id)
 	{
-		return $this->db->get_where('tb_indekos', $where);
+		$this->db->join('tb_pemilik', 'tb_pemilik.id_pemilik = tb_indekos.id_pemilik', 'left');
+		return $this->db->get_where('tb_indekos', ['id_kos' => $id])->row();
 	}
 
 	function get_kos($id)
@@ -29,7 +31,8 @@ class Kos extends CI_Model {
 
 	function insert($data)
 	{
-		print_r($data);
+		unset($data['f_tambahan_desc']);
+		unset($data['f_tambahan_value']);
 		$this->db->insert('tb_indekos', $data);
 		return $this->db->insert_id();
 	}

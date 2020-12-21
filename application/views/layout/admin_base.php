@@ -21,7 +21,7 @@
     <link rel="apple-touch-icon" sizes="76x76" href="<?= base_url() ?>assets/img/apple-icon.png">
     <link rel="icon" type="image/png" href="<?= base_url() ?>assets/img/favicon.ico">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
-    <title>Light Bootstrap Dashboard - Free Bootstrap 4 Admin Dashboard by Creative Tim</title>
+    <title>Admin UMIKOS</title>
     <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, shrink-to-fit=no' name='viewport' />
     <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700,200" rel="stylesheet" />
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css" />
@@ -42,6 +42,7 @@
 <script src="<?= base_url() ?>assets/js/core/datatables.min.js"></script>
 <script src="<?= base_url() ?>assets/js/core/leaflet.js"></script>
 <script src="<?= base_url() ?>assets/js/core/dropzone.js"></script>
+<script src="<?= base_url('assets/js/core/sweetalert.min.js') ?>" type="text/javascript" charset="utf-8"></script>
 <body>
     <div class="wrapper">
         <div class="sidebar">
@@ -57,26 +58,32 @@
                     </a>
                 </div>
                 <ul class="nav">
-                    <li class="nav-item active">
-                        <a class="nav-link" href="dashboard.html">
+                    <li class="nav-item <?= $active == 'dashboard' ? 'active' : '' ?>">
+                        <a class="nav-link" href="<?= base_url('admin') ?>">
                             <i class="nc-icon nc-chart-pie-35"></i>
                             <p>Dashboard</p>
                         </a>
                     </li>
-                    <li>
-                        <a class="nav-link" href="./table.html">
+                    <li class="nav-item <?= $active == 'owner' ? 'active' : '' ?>">
+                        <a class="nav-link" href="<?= base_url('admin/owner') ?>">
                             <i class="nc-icon nc-notes"></i>
                             <p>Data Owner</p>
                         </a>
                     </li>
-                    <li>
-                        <a class="nav-link" href="./user.html">
+                    <li class="nav-item <?= $active == 'kos' ? 'active' : '' ?>">
+                        <a class="nav-link" href="<?= base_url('admin/kos') ?>">
                             <i class="nc-icon nc-circle-09"></i>
                             <p>Data Indekos</p>
                         </a>
                     </li>
+                    <li class="nav-item <?= $active == 'kampus' ? 'active' : '' ?>">
+                        <a class="nav-link" href="<?= base_url('admin/kampus') ?>">
+                            <i class="nc-icon nc-bank"></i>
+                            <p>Data Kampus</p>
+                        </a>
+                    </li>
                     <li class="nav-item active active-pro">
-                        <a class="nav-link active" href="upgrade.html">
+                        <a class="nav-link active" href="<?= base_url('auth/logout') ?>">
                             <i class="nc-icon nc-alien-33"></i>
                             <p>Logout</p>
                         </a>
@@ -88,12 +95,12 @@
             <!-- Navbar -->
             <nav class="navbar navbar-expand-lg " color-on-scroll="500">
                 <div class="container-fluid">
-                    <a class="navbar-brand" href="#pablo"> Dashboard </a>
+                    <!-- <a class="navbar-brand" href="#pablo"> Dashboard </a> -->
                     <div class="collapse navbar-collapse justify-content-end" id="navigation">
                         <ul class="nav navbar-nav mr-auto">
                             <li class="nav-item">
                                 <a href="#" class="nav-link" data-toggle="dropdown">
-                                    <span class="d-lg-none">Dashboard</span>
+                                    <!-- <span class="d-lg-none">Dashboard</span> -->
                                 </a>
                             </li>
                         </ul>

@@ -7,6 +7,7 @@ class Main extends CI_Controller {
 	{
 		parent::__construct();
 		$this->load->model('Kos');
+		$this->load->model('Owner');
 	}
 
 	public function index()
@@ -58,16 +59,42 @@ class Main extends CI_Controller {
 		echo json_encode(['msg' => $msg, 'data' => $trans]);
 	}
 
+	function delete_kos($id)
+	{
+		$trans = $this->Kos->delete($id);
+		echo json_encode(['msg' => 'Kos telah dihapus', 'data' => $trans]);
+	}
+
 	function profile()
 	{
-		$this->load->view('layout/owner_base', array('content' => 'main/profile'));
+		$data['profile'] = $this->Owner->get_where($this->session->userdata('id'));
+		$data['content'] = 'main/profile';
+		$this->load->view('layout/owner_base', $data);
 	}
 
 	function save_owner()
 	{
 		$payload = $this->input->post();
-		$trans = $this->Owner->update($payload, $this->session->userdata('user_id'));
-		echo json_encode(['msg' => $msg, 'data' => $trans]);
+		$trans = $this->Owner->update($payload, $this->session->userdata('id'));
+		echo json_encode(['msg' => 'Data telah diperbarui', 'data' => $trans]);
+	}
+
+	function temp_upload()
+	{
+		$config['upload_path'] = 'temp';
+		$config['allowed_types'] = 'gif|jpg|png|jpeg';
+		$config['file_name'] = $this->input->post('file_uuid');
+
+		$this->load->library('upload', $config);
+
+		if ( ! $this->upload->do_upload('file')){
+			$error = array('error' => $this->upload->display_errors());
+			print_r($error);
+		}
+		else{
+			$data = $this->upload->data();
+			echo $this->input->post('file_uuid').$data['file_ext'];
+		}
 	}
 
 }

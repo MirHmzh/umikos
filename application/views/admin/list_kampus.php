@@ -2,7 +2,7 @@
     .table-full-width{
         margin: 0;
     }
-    #table_indekos{
+    #table_kampus{
         width: 100% !important;
     }
     #btn-add{
@@ -19,10 +19,10 @@
                 <div class="card-header ">
                     <div class="row">
                         <div class="col-6">
-                            <h4 class="card-title">Indekos <?= $this->session->userdata('nama'); ?></h4>
+                            <h4 class="card-title">Kampus</h4>
                         </div>
                         <div class="col-6 add-wrapper">
-                            <a href="<?= base_url('main/form_kos') ?>" title="">
+                            <a href="<?= base_url('admin/form_kampus') ?>" title="">
                                 <button type="button" class="btn btn-info btn-fill" id="btn-add"><i class="fa fa-plus"></i></button>
                             </a>
                         </div>
@@ -30,24 +30,17 @@
                     <!-- <p class="card-category">Here is a subtitle for this table</p> -->
                 </div>
                 <div class="card-body table-full-width table-responsive">
-                    <table class="table table-hover table-striped" id="table_indekos">
+                    <table class="table table-hover table-striped" id="table_kampus">
                         <thead>
                             <th>No. </th>
-                            <th>Nama Kos</th>
-                            <th>Nama Owner</th>
-                            <th>No. Telp Owner</th>
-                            <th>Alamat Kos</th>
-                            <th>Tarif</th>
-                            <th>&nbsp;&nbsp;&nbsp;</th>
+                            <th>Nama Kampus</th>
+                            <th>Alamat</th>
+                            <th>Koordinat Lat.</th>
+                            <th>Koordinat Lng.</th>
+                            <th></th>
                         </thead>
                         <tbody>
-<!--                             <tr>
-                                <td>1</td>
-                                <td>Dakota Rice</td>
-                                <td>$36,738</td>
-                                <td>Niger</td>
-                                <td>Oud-Turnhout</td>
-                            </tr> -->
+
                         </tbody>
                     </table>
                 </div>
@@ -57,53 +50,48 @@
 </div>
 <script type="text/javascript" charset="utf-8">
     $(document).ready(function() {
-
-    });
-    let table_indekos = $('#table_indekos').DataTable( {
+        $('#table_kampus').DataTable( {
             processing: true,
             serverSide: true,
             ordering: true,
-            deferRender: true,
+            deferRenderer: true,
             paging: true,
             ajax: {
-                url : "<?= base_url('main/get_kos') ?>",
+                url : "<?= base_url('admin/get_kampus') ?>",
                 method: "POST"
             },
             columns : [
                 {
-                    data : 'id_kos',
+                    data : 'id_kampus',
                     render: (data, type, row, meta) => {
                         return meta.row + meta.settings._iDisplayStart + 1;
                     }
                 },
-                { data : 'nama_kos' },
-                { data : 'nama_pemilik' },
-                { data : 'notelp_pemilik' },
-                { data : 'alamat_kos' },
-                { data : 'tarif_kos' },
+                { data : 'nama_kampus' },
+                { data : 'alamat_kampus' },
+                { data : 'lat_kampus' },
+                { data : 'lng_kampus' },
                 {
-                    data : 'id_kos',
+                    data : 'id_kampus',
                     render: (data, type, full) => {
                         let html = `
-                            <button type="button" onClick="editKos('${data}')" class="btn btn-warning btn-fill"><i class="fa fa-pencil"></i></button>
+                            <button type="button" onClick="editKampus('${data}')" class="btn btn-warning btn-fill"><i class="fa fa-pencil"></i></button>
                             &nbsp;&nbsp;
-                            <button type="button" onClick="deleteKos('${data}')" class="btn btn-danger btn-fill"><i class="fa fa-trash"></i></button>
+                            <button type="button" onClick="deleteKampus('${data}')" class="btn btn-danger btn-fill"><i class="fa fa-trash"></i></button>
                         `;
                         return html;
                     },
                 }
             ],
-        });
-        $('#table_indekos').on('click', 'tr', () => {
-            let data = table_indekos.row(this).data();
-            console.log(data);
-        });
+        } );
 
-    function editKos(id) {
-        window.location = "<?= base_url('main/form_kos/') ?>"+id;
+    });
+
+    function editKampus(id) {
+        window.location = "<?= base_url('admin/form_kampus/') ?>"+id;
     }
 
-    function deleteKos(id) {
+    function deleteKampus(id) {
         Swal.fire({
             title: 'Perhatian',
             title: 'Apakah Anda yakin akan menghapus data ini?',
@@ -113,9 +101,9 @@
             cancelButtonText : 'Tidak'
         }).then((result) => {
             if (result.isConfirmed) {
-                $.get("<?= base_url('Main/delete_kos/') ?>"+id, function(data, textStatus, xhr) {
+                $.get("<?= base_url('admin/delete_kampus/') ?>"+id, function(data, textStatus, xhr) {
                     console.log(data);
-                    $('#table_indekos').DataTable().ajax.reload();
+                    $('#table_kampus').DataTable().ajax.reload();
                     Swal.fire('Sukses', data.msg, 'success');
                  }, 'json');
             }

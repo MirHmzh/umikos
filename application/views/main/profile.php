@@ -22,7 +22,7 @@
                             <div class="col-md-12">
                                 <div class="form-group">
                                     <label>Nama</label>
-                                    <input type="text" name="nama_pemilik" class="form-control">
+                                    <input type="text" name="nama_pemilik" class="form-control" value="<?= isset($profile->nama_pemilik) ? $profile->nama_pemilik : '' ?>">
                                 </div>
                             </div>
                         </div>
@@ -30,7 +30,7 @@
                             <div class="col-md-12">
                                 <div class="form-group">
                                     <label>No. Telp</label>
-                                    <input type="text" name="notelp_pemilik" class="form-control">
+                                    <input type="text" name="notelp_pemilik" class="form-control" value="<?= isset($profile->notelp_pemilik) ? $profile->notelp_pemilik : '' ?>">
                                 </div>
                             </div>
                         </div>
@@ -38,7 +38,7 @@
                             <div class="col-md-12">
                                 <div class="form-group">
                                     <label>Alamat</label>
-                                    <textarea rows="4" cols="80" name="alamat_pemilik" class="form-control"></textarea>
+                                    <textarea rows="4" cols="80" name="alamat_pemilik" class="form-control"><?= isset($profile->alamat_pemilik) ? $profile->alamat_pemilik : '' ?></textarea>
                                 </div>
                             </div>
                         </div>
@@ -46,7 +46,7 @@
                             <div class="col-md-12">
                                 <div class="form-group">
                                     <label>Email</label>
-                                    <input type="text" name="email" class="form-control">
+                                    <input type="text" name="email" class="form-control" value="<?= isset($profile->email) ? $profile->email : '' ?>">
                                 </div>
                             </div>
                         </div>
@@ -65,7 +65,7 @@
             </div>
         </div>
         <div class="col-md-4">
-            <div class="card card-user card-profile">
+            <!-- <div class="card card-user card-profile">
                 <div class="card-body">
                     <div class="author">
                         <a href="#">
@@ -79,7 +79,7 @@
                         <br>Sidoarjo
                     </p>
                 </div>
-            </div>
+            </div> -->
         </div>
     </div>
 </div>
@@ -88,10 +88,20 @@
         e.preventDefault();
         let form_data = $('#form_owner').serializeArray();
         $.ajax({
-            url: "<?= base_url('admin/save_owner/'.(isset($id_pemilik) ? $id_pemilik : '')) ?>",
+            url: "<?= base_url('main/save_owner') ?>",
             type: 'POST',
             dataType: 'json',
             data: form_data,
+            success : (data) => {
+                Swal.fire({
+                  title: 'Sukses',
+                  text: 'Data Anda telah disimpan',
+                  icon: 'success',
+                  timer: 2000,
+                }).then((result) => {
+                  window.location = "<?= base_url('main') ?>";
+                })
+            },
         });
     });
 </script>

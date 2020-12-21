@@ -3,11 +3,24 @@
         width: 100%;
         height: 25em;
     }
+    .dropzone{
+        border: none !important;
+        background: none;
+        padding: 0;
+    }
+    .dropzone .dz-preview .dz-remove{
+        background: #dc3545;
+        text-decoration: none;
+    }
+    .dropzone .dz-preview .dz-remove:hover{
+        color: white;
+        text-decoration: none;
+    }
 </style>
 <div class="container-fluid">
     <div class="row">
         <div class="col-md-12">
-            <form id="dropzone" class="form_kos">
+            <form id="dropzone" class="form_kos dropzone dz-clickable" enctype="multipart/form-data">
                 <div class="row">
                     <div class="col-md-12">
                         <div class="form-group">
@@ -137,10 +150,8 @@
                         Foto
                     </div>
                 </div>
-                <div class="row">
-                    <div class="col-md-12">
-                        <input type="file" name="file" />
-                    </div>
+                <div class="dz-message">Klik disini atau lepaskan berkas untuk mengunggah foto indekos Anda
+                    <br>
                 </div>
                 <button id="save_kos" class="btn btn-info btn-fill pull-right">Update</button>
                 <div class="clearfix"></div>
@@ -149,6 +160,10 @@
     </div>
 </div>
 <script type="text/javascript" charset="utf-8">
+    let global_attachment = [];
+    let global_lat;
+    let global_lng;
+    let kos_marker;
     var mymap = L.map('kos-map').setView([-7.446441141902094, 112.71884192158748], 15);
      L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
         maxZoom: 19,
@@ -158,6 +173,14 @@
         console.log(el);
         $('div[data-fasilitas-wrapper="'+el+'"]').remove();
     }
+    function clickMap(e) {
+        global_lat = e.latlng.lat;
+        global_lng = e.latlng.lng;
+        if(kos_marker) { mymap.removeLayer(kos_marker); }
+        kos_marker = L.marker([e.latlng.lat, e.latlng.lng]).addTo(mymap);
+    }
+    mymap.on('click', clickMap);
+
     $('#add_fasilitas').click((e) => {
         e.preventDefault();
         let date = new Date(),
@@ -187,6 +210,14 @@
     });
     $('#save_kos').click((e) => {
         e.preventDefault();
+        Swal.fire({
+          title: 'Menyimpan',
+          text: 'Sedang memproses permintaan Anda',
+          allowOutsideClick: false,
+            onBeforeOpen: () => {
+                Swal.showLoading()
+            },
+        });
         let f_tambahan_desc = $('input[name="f_tambahan_desc[]"]').map(function(){return $(this).val();}).get();
         let f_tambahan_value = $('input[name="f_tambahan_value[]"]').map(function(){return $(this).val();}).get();
         let f_tambahan = [];
@@ -199,15 +230,47 @@
             {name: 'f_kamar_mandi', value: $('input[name="f_kamar_mandi"]:checked').length },
             {name: 'f_listrik', value: $('input[name="f_listrik"]:checked').length},
             {name: 'f_lain', value : JSON.stringify(f_tambahan)},
-            {name: 'lat_kos', value: '-7.44684'},
-            {name: 'lng_kos', value: '112.71866'}
+            {name: 'lat_kos', value: global_lat},
+            {name: 'lng_kos', value: global_lng},
+            {name: 'attachment', value: JSON.stringify(global_attachment)}
         );
 
         $.ajax({
-            url: "<?= base_url('admin/save_kos/'.(isset($id_kos) ? $id_kos : '')) ?>",
+            url: "<?= base_url('main/save_kos/'.(isset($id_kos) ? $id_kos : '')) ?>",
             type: 'POST',
             data: form_data,
+            success: (data) => {
+                Swal.close();
+                Swal.fire({
+                  title: 'Sukses',
+                  text: 'Data Anda telah disimpan',
+                  icon: 'success',
+                  timer: 2000,
+                }).then((result) => {
+                  if (result.dismiss === Swal.DismissReason.timer) {
+                    window.location = "<?= base_url('main') ?>";
+                  }
+                })
+            },
         });
     });
-    $("#dropzone").dropzone({ url: "/file/post" });
+    $("#dropzone").dropzone({
+        url: "<?= base_url('main/temp_upload') ?>" ,
+        addRemoveLinks: true,
+        sending : (file, xhr, formData) => {
+            formData.append('file_uuid', file.upload.uuid);
+        },
+        removedfile : (file) => {
+            console.log(file.upload.uuid);
+            let index = global_attachment.indexOf(file.upload.uuid);
+            global_attachment.splice(index);
+            console.log(global_attachment);
+            var _ref;
+            return (_ref = file.previewElement) != null ? _ref.parentNode.removeChild(file.previewElement) : void 0;
+        },
+        success : (file, response) => {
+            global_attachment.push(response);
+            console.log(global_attachment);
+        },
+    });
 </script>

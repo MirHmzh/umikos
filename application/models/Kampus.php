@@ -7,6 +7,13 @@ class Kampus extends CI_Model {
 		return $this->db->get('tb_kampus')->result();
 	}
 
+	function get_table($datatable)
+	{
+		$data['total'] = $this->db->count_all_results('tb_kampus');
+		$data['results'] = $this->db->get('tb_kampus', $datatable['limit'], $datatable['start'])->result();
+		return $data;
+	}
+
 	function get_where($where)
 	{
 		return $this->db->get_where('tb_kampus', $where)->row();
