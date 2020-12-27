@@ -20,12 +20,12 @@
 <div class="container-fluid">
     <div class="row">
         <div class="col-md-12">
-            <form id="dropzone" class="form_kampus dropzone dz-clickable" enctype="multipart/form-data">
+            <form id="dropzone" class="form_kampus" enctype="multipart/form-data">
                 <div class="row">
                     <div class="col-md-12">
                         <div class="form-group">
                             <label>Nama Kampus</label>
-                            <input type="text" name="nama_kampus" class="form-control">
+                            <input type="text" name="nama_kampus" class="form-control" value="<?= isset($kampus) ? $kampus->nama_kampus : '' ?>">
                         </div>
                     </div>
                 </div>
@@ -33,7 +33,7 @@
                     <div class="col-md-12">
                         <div class="form-group">
                             <label>Alamat Kampus</label>
-                            <textarea rows="2" name="alamat_kampus" cols="80" class="form-control"></textarea>
+                            <textarea rows="2" name="alamat_kampus" cols="80" class="form-control"><?= isset($kampus) ? $kampus->alamat_kampus : '' ?></textarea>
                         </div>
                     </div>
                 </div>
@@ -51,18 +51,18 @@
                     </div>
                 </div>
                 <br>
-                <button id="save_kampus" class="btn btn-info btn-fill pull-right">Update</button>
+                <button id="save_kampus" class="btn btn-info btn-fill pull-right">Save</button>
                 <div class="clearfix"></div>
             </form>
         </div>
     </div>
 </div>
 <script type="text/javascript" charset="utf-8">
-    let global_lat;
-    let global_lng;
+    let global_lat = "<?= isset($kampus) ? $kampus->lat_kampus : '' ?>";
+    let global_lng = "<?= isset($kampus) ? $kampus->lng_kampus : '' ?>";
     let kampus_marker;
     var mymap = L.map('kampus-map').setView([-7.446441141902094, 112.71884192158748], 15);
-     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
         maxZoom: 19,
         attribution: '&copy; <a href="https://openstreetmap.org/copyright">UMIKOS | OpenStreetMap OpenSource Maps API</a>'
     }).addTo(mymap);
@@ -85,10 +85,10 @@
           text: 'Sedang memproses permintaan Anda',
           showConfirmButton: false,
           allowOutsideClick: false,
-            onBeforeOpen: () => {
-                Swal.showLoading()
-            },
-        });
+          onBeforeOpen: () => {
+            Swal.showLoading()
+        },
+    });
         let form_data = $('.form_kampus').serializeArray();
         form_data.push({name: 'lng_kampus', value: global_lng});
         form_data.push({name: 'lat_kampus', value: global_lat});
@@ -104,10 +104,20 @@
                   text: 'Data Anda telah disimpan',
                   icon: 'success',
                   timer: 2000,
-                }).then((result) => {
+              }).then((result) => {
                   window.location = "<?= base_url('admin/kampus') ?>";
-                })
-            },
-        });
+                  if (result.dismiss === Swal.DismissReason.timer) {
+                    window.location = "<?= base_url('admin/kampus') ?>";
+                }
+            })
+          },
+      });
+    });
+
+    $(document).ready(function() {
+        <?php if((isset($kos->lat_kampus) && $kampus->lat_kampus != null) || (isset($kampus->lng_kampus) && $kampus->lng_kampus != null)){ ?>
+            kampus_marker = L.marker([<?= $kampus->lat_kampus ?>, <?= $kampus->lng_kampus ?>]).addTo(mymap);
+            mymap.panTo(new L.LatLng(<?= $kampus->lat_kampus ?>, <?= $kampus->lng_kampus ?>));
+        <?php } ?>
     });
 </script>

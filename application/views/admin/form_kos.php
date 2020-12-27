@@ -16,11 +16,14 @@
         color: white;
         text-decoration: none;
     }
+    .dropzone .dz-preview .dz-image img{
+        width: 100%;
+    }
 </style>
 <div class="container-fluid">
     <div class="row">
         <div class="col-md-12">
-            <form id="dropzone" class="form_kos dropzone dz-clickable" enctype="multipart/form-data">
+            <form id="dropzone" class="form_kos dropzone" enctype="multipart/form-data">
                 <div class="row">
                     <div class="col-md-12">
                         <div class="form-group">
@@ -49,6 +52,14 @@
                         <div class="form-group">
                             <label>Alamat</label>
                             <textarea rows="2" name="alamat_kos" cols="80" class="form-control"><?= isset($kos->alamat_kos) ? $kos->alamat_kos : '' ?></textarea>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <label>Tarif (bulan)</label>
+                            <input type="text" name="tarif_kos" class="form-control" value="<?= isset($kos->tarif_kos) ? $kos->tarif_kos : '' ?>">
                         </div>
                     </div>
                 </div>
@@ -131,27 +142,29 @@
                     </div>
                 </div>
                 <div class="fasilitas-tambahan-wrapper">
-                    <?php foreach ($f_lain = json_decode($kos->f_lain, true) as $i => $v): ?>
-                        <div class="row" data-fasilitas-wrapper="00f00<?= $i ?>">
-                            <div class="col-md-5 pr-1">
-                                <div class="form-group">
-                                    <input type="text" name="f_tambahan_desc[]" class="form-control" placeholder="Fasilitas Tambahan" value="<?= key($f_lain[$i]) ?>">
+                    <?php if (isset($kos)): ?>
+                        <?php foreach ($f_lain = json_decode($kos->f_lain, true) as $i => $v): ?>
+                            <div class="row" data-fasilitas-wrapper="00f00<?= $i ?>">
+                                <div class="col-md-5 pr-1">
+                                    <div class="form-group">
+                                        <input type="text" name="f_tambahan_desc[]" class="form-control" placeholder="Fasilitas Tambahan" value="<?= key($f_lain[$i]) ?>">
+                                    </div>
+                                </div>
+                                <div class="col-md-5 pl-1">
+                                    <div class="form-group">
+                                        <input type="text" name="f_tambahan_value[]" class="form-control" placeholder="Keterangan Fasilitas Tambahan" value="<?= reset($f_lain[$i]) ?>">
+                                    </div>
+                                </div>
+                                <div class="col-md-2 pl-1">
+                                    <div class="form-group">
+                                        <button class="btn btn-danger btn-fill pull-right remove_fasilitas" onClick="removeFasilitas('00f00<?= $i ?>')">
+                                            <i class="nc-icon nc-simple-remove"></i>
+                                        </button>
+                                    </div>
                                 </div>
                             </div>
-                            <div class="col-md-5 pl-1">
-                                <div class="form-group">
-                                    <input type="text" name="f_tambahan_value[]" class="form-control" placeholder="Keterangan Fasilitas Tambahan" value="<?= reset($f_lain[$i]) ?>">
-                                </div>
-                            </div>
-                            <div class="col-md-2 pl-1">
-                                <div class="form-group">
-                                    <button class="btn btn-danger btn-fill pull-right remove_fasilitas" onClick="removeFasilitas('00f00<?= $i ?>')">
-                                        <i class="nc-icon nc-simple-remove"></i>
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-                    <?php endforeach ?>
+                        <?php endforeach ?>
+                    <?php endif ?>
                 </div>
                 <div class="row">
                     <div class="col-md-12">
@@ -170,16 +183,17 @@
                 <div class="dz-message">Klik disini atau lepaskan berkas untuk mengunggah foto indekos Anda
                     <br>
                 </div>
-                <button id="save_kos" class="btn btn-info btn-fill pull-right">Update</button>
+                <button id="save_kos" class="btn btn-info btn-fill pull-right">Save</button>
                 <div class="clearfix"></div>
             </form>
         </div>
     </div>
 </div>
 <script type="text/javascript" charset="utf-8">
-    let global_attachment = <?= isset($kos->attachment) ? $kos->attachment : '' ?>;
-    let global_lat;
-    let global_lng;
+    Dropzone.autoDiscover = false;
+    let global_attachment = <?= isset($kos->attachment) ? $kos->attachment : '[]' ?>;
+    let global_lat = "<?= isset($kos->lat_kos) ? $kos->lat_kos : '' ?>";
+    let global_lng = "<?= isset($kos->lng_kos) ? $kos->lng_kos : '' ?>";
     let kos_marker;
     var mymap = L.map('kos-map').setView([-7.446441141902094, 112.71884192158748], 15);
      L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
@@ -187,9 +201,59 @@
         attribution: '&copy; <a href="https://openstreetmap.org/copyright">UMIKOS | OpenStreetMap OpenSource Maps API</a>'
     }).addTo(mymap);
     $(document).ready(function() {
-        <?php if(isset($kos->lat_kos) || (isset($kos->lng_kos))){ ?>
+        <?php if((isset($kos->lat_kos) && $kos->lat_kos != null) || (isset($kos->lng_kos) && $kos->lng_kos != null)){ ?>
             kos_marker = L.marker([<?= $kos->lat_kos ?>, <?= $kos->lng_kos ?>]).addTo(mymap);
-        <?php ?>
+            mymap.panTo(new L.LatLng(<?= $kos->lat_kos ?>, <?= $kos->lng_kos ?>));
+        <?php } ?>
+        $(".dropzone").dropzone({
+            init : () => {
+                if (global_attachment) {
+                    for (var i = 0; i < global_attachment.length; i++) {
+                        var mockFile = {
+                            name: '<?= base_url('imgkos/') ?>'+global_attachment[i],
+                            dataUrl: '<?= base_url('imgkos/') ?>'+global_attachment[i],
+                            imageUrl: '<?= base_url('imgkos/') ?>'+global_attachment[i],
+                            // size: 12345,
+                            uuid : global_attachment[i],
+                            url: '<?= base_url('imgkos/') ?>'+global_attachment[i]
+                        };
+                        Dropzone.forElement(".dropzone").files.push(mockFile);
+                        Dropzone.forElement(".dropzone").emit("addedfile", mockFile);
+                        Dropzone.forElement(".dropzone").emit("thumbnail", mockFile, '<?= base_url('imgkos/') ?>'+global_attachment[i]);
+
+                        Dropzone.forElement(".dropzone").createThumbnailFromUrl(mockFile, '<?= base_url('imgkos/') ?>'+global_attachment[i]);
+                        Dropzone.forElement(".dropzone").emit("complete", mockFile);
+                    }
+                }
+
+                Dropzone.forElement(".dropzone").on("success", function(file) {
+                            $('.dz-image').css({"width":"100%", "height":"auto"});
+                        })
+
+                Dropzone.forElement(".dropzone").on("removedfile", function (file) {
+                    var index = global_attachment.indexOf(file.uuid);
+                    if (index !== -1) {
+                        global_attachment.splice(index, 1);
+                    }
+                    if (file.url && file.url.trim().length > 0) {
+                        $("<input type='hidden'>").attr({
+                            id: 'DeletedImageUrls',
+                            name: 'DeletedImageUrls'
+                        }).val(file.url).appendTo('#image-form');
+                    }
+                });
+            },
+            url: "<?= base_url('admin/temp_upload') ?>" ,
+            addRemoveLinks: true,
+            sending : (file, xhr, formData) => {
+                formData.append('file_uuid', file.upload.uuid);
+            },
+            success : (file, response) => {
+                global_attachment.push(response);
+                $('.dz-image').css({"width":"100%", "height":"auto"});
+                console.log(global_attachment);
+            },
+        });
     });
     function removeFasilitas(el){
         console.log(el);
@@ -235,6 +299,7 @@
         Swal.fire({
           title: 'Menyimpan',
           text: 'Sedang memproses permintaan Anda',
+          showConfirmButton: false,
           allowOutsideClick: false,
             onBeforeOpen: () => {
                 Swal.showLoading()
@@ -270,30 +335,12 @@
                   icon: 'success',
                   timer: 2000,
                 }).then((result) => {
+                  window.location = "<?= base_url('admin') ?>";
                   if (result.dismiss === Swal.DismissReason.timer) {
                     window.location = "<?= base_url('admin') ?>";
                   }
                 })
             },
         });
-    });
-    $("#dropzone").dropzone({
-        url: "<?= base_url('admin/temp_upload') ?>" ,
-        addRemoveLinks: true,
-        sending : (file, xhr, formData) => {
-            formData.append('file_uuid', file.upload.uuid);
-        },
-        removedfile : (file) => {
-            console.log(file.upload.uuid);
-            let index = global_attachment.indexOf(file.upload.uuid);
-            global_attachment.splice(index);
-            console.log(global_attachment);
-            var _ref;
-            return (_ref = file.previewElement) != null ? _ref.parentNode.removeChild(file.previewElement) : void 0;
-        },
-        success : (file, response) => {
-            global_attachment.push(response);
-            console.log(global_attachment);
-        },
     });
 </script>

@@ -11,6 +11,11 @@ class Auth extends CI_Controller {
 
 	public function index()
 	{
+		if ($this->session->userdata('id') == 1) {
+			redirect('admin','refresh');
+		}else if($this->session->userdata('id') == 2){
+			redirect('main','refresh');
+		}
 		$this->load->view('auth/auth');
 	}
 
@@ -18,13 +23,23 @@ class Auth extends CI_Controller {
 	{
 		$data = $this->Authm->login($this->input->post());
 		if (!empty($data)) {
-			$array = array(
-				'id' => $data->id_user,
-				'email' => $data->email,
-				'role' => $data->role,
-				'name' => $data->nama_pemilik
-			);
-			$this->session->set_userdata( $array );
+			if ($data->role == 1) {
+				$array = array(
+					'id' => $data->id_user,
+					'email' => $data->email,
+					'role' => $data->role,
+					'name' => $data->nama_pemilik
+				);
+				$this->session->set_userdata( $array );
+			}else{
+				$array = array(
+					'id' => $data->id_user,
+					'email' => $data->email,
+					'role' => $data->role,
+					'name' => 'UMIKOS Admin'
+				);
+				$this->session->set_userdata( $array );
+			}
 		}
 		echo json_encode(['msg' => empty($data) ? 'Data tidak ditemukan' : 'Data ditemukan', 'data' => $data, 'length' => empty($data) ? 0 : 1]);
 	}

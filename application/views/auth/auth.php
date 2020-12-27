@@ -110,7 +110,11 @@
 				if(data.length != 1){
 					Swal.fire('Perhatian', 'Pengguna tidak ditemukan','warning');
 				}else{
-					window.location = "<?= base_url('main') ?>";
+					if(data.data.role == 1){
+						window.location = "<?= base_url('admin') ?>";
+					}else if(data.data.role == 2){
+						window.location = "<?= base_url('main') ?>";
+					}
 				}
 			}, 'json');
 		});

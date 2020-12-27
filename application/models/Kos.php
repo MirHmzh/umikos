@@ -17,6 +17,16 @@ class Kos extends CI_Model {
 		return $data;
 	}
 
+	function get_table_owned($datatable, $id)
+	{
+		$data['total'] = $this->db->count_all_results('tb_indekos');
+		$this->db->select('tb_indekos.*, owner.nama_pemilik, owner.notelp_pemilik');
+		$this->db->join('tb_pemilik as owner', 'owner.id_pemilik = tb_indekos.id_pemilik', 'left');
+		$this->db->where('tb_indekos.id_pemilik', $id);
+		$data['results'] = $this->db->get('tb_indekos', $datatable['limit'], $datatable['start'])->result();
+		return $data;
+	}
+
 	function get_where($id)
 	{
 		$this->db->join('tb_pemilik', 'tb_pemilik.id_pemilik = tb_indekos.id_pemilik', 'left');
@@ -39,6 +49,8 @@ class Kos extends CI_Model {
 
 	function update($data, $id)
 	{
+		unset($data['f_tambahan_desc']);
+		unset($data['f_tambahan_value']);
 		return $this->db->update('tb_indekos', $data, ['id_kos' => $id]);
 	}
 
@@ -78,6 +90,11 @@ class Kos extends CI_Model {
 		$this->db->order_by('distance', 'asc');
 		$trans = $this->db->get('tb_indekos');
 		return $trans->result();
+	}
+
+	public function count()
+	{
+		return $this->db->count_all('tb_indekos');
 	}
 
 }

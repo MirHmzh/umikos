@@ -8,6 +8,9 @@ class Main extends CI_Controller {
 		parent::__construct();
 		$this->load->model('Kos');
 		$this->load->model('Owner');
+		if ($this->session->userdata('id') != 2) {
+			redirect('auth','refresh');
+		}
 	}
 
 	public function index()
@@ -26,7 +29,7 @@ class Main extends CI_Controller {
 			'column' => $col[$this->input->post('order[0][column]')],
 			'column_order' => $this->input->post('order[0][dir]')
 		];
-		$kos = $this->Kos->get_table($requesttable);
+		$kos = $this->Kos->get_table_owned($requesttable, $this->session->userdata('id'));
 		$datatable = [
 			'draw' => $this->input->post('draw'),
 			'recordsTotal' => $kos['total'],
@@ -39,7 +42,8 @@ class Main extends CI_Controller {
 	function form_kos($id = null)
 	{
 		if ($id) {
-			$content = array('content' => 'main/form_kos', 'id_kos' => $id);
+			$kos = $this->Kos->get_where($id);
+			$content = array('content' => 'main/form_kos', 'id_kos' => $id, 'kos' => $kos);
 		}else{
 			$content = array('content' => 'main/form_kos');
 		}
@@ -51,9 +55,17 @@ class Main extends CI_Controller {
 		$payload = $this->input->post();
 		if($id){
 			$trans = $this->Kos->update($payload, $id);
+			foreach ($attachment = json_decode($payload['attachment']) as $k => $v) {
+				$move = rename('temp/'.$v, 'imgkos/'.$v);
+				print_r('/var/www/html/umikos/temp/'.$v);
+			}
 			$msg = 'Kos telah ditambahkan';
 		}else{
 			$trans = $this->Kos->insert($payload);
+			foreach ($attachment = json_decode($payload['attachment']) as $k => $v) {
+				$move = rename('temp/'.$v, 'imgkos/'.$v);
+				print_r('/var/www/html/umikos/temp/'.$v);
+			}
 			$msg = 'Kos telah diperbarui';
 		}
 		echo json_encode(['msg' => $msg, 'data' => $trans]);
@@ -67,7 +79,7 @@ class Main extends CI_Controller {
 
 	function profile()
 	{
-		$data['profile'] = $this->Owner->get_where($this->session->userdata('id'));
+		$data['profile'] = $this->Owner->get_owner($this->session->userdata('id'));
 		$data['content'] = 'main/profile';
 		$this->load->view('layout/owner_base', $data);
 	}

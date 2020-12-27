@@ -95,6 +95,7 @@
             <!-- Navbar -->
             <nav class="navbar navbar-expand-lg " color-on-scroll="500">
                 <div class="container-fluid">
+                    <img src="<?= base_url('assets/img/').'umikosicon.png' ?>" style="width: 2em" alt="">
                     <!-- <a class="navbar-brand" href="#pablo"> Dashboard </a> -->
                     <div class="collapse navbar-collapse justify-content-end" id="navigation">
                         <ul class="nav navbar-nav mr-auto">
@@ -419,9 +420,9 @@
 <script type="text/javascript">
     $(document).ready(function() {
         // Javascript method's body can be found in assets/js/demos.js
-        demo.initDashboardPageCharts();
+        // demo.initDashboardPageCharts();
 
-        demo.showNotification();
+        // demo.showNotification();
 
     });
 </script>

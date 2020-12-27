@@ -141,6 +141,33 @@
 	.side-menu-outer{
 		max-width: 25em;
 	}
+	#carouselDetilIndekos{
+		height: 30em;
+	}
+	.carousel-item img{
+		max-height: 30em;
+		object-fit: contain;
+	}
+	.carousel-kos{
+		height: 30em;
+	}
+	.carousel-item{
+		position: relative;
+		height: 30em;
+		margin: auto;
+	}
+	.carousel-item img{
+		position: absolute;
+		margin: auto;
+		top: 0;
+		bottom: 0;
+		right: 0;
+		left: 0;
+		max-width: 100%;
+	}
+	.carousel-control-next, .carousel-control-prev{
+		color: black;
+	}
 </style>
 <body>
 	<div id="main_map">
@@ -150,7 +177,7 @@
 		<div class="kampus-wrapper">
 			<!-- Default dropup button -->
 			<div class="btn-group dropup">
-				<button type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+				<button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 			    Universitas Muhammadiyah Sidoarjo Kampus 1
 				</button>
 				<div class="dropdown-menu">
@@ -169,7 +196,7 @@
 		    	<input class="form-control mr-sm-2" id="cari_kos" type="search" placeholder="Cari Kos atau Alamatmu!" aria-label="Cari Kos atau Alamatmu!">
 		    </form>
 		</div>
-		<a href="<?= base_url('owner') ?>" title="">
+		<a href="<?= base_url('main') ?>" title="">
 			<span class="owner-wrapper">Owner Kos?</span>
 		</a>
 	</div>
@@ -225,7 +252,7 @@
 		                        <div class="col-md-2 pl-1">
 		                            <div class="form-group">
 		                                <button class="btn btn-danger btn-fill pull-right remove_fasilitas" onClick="removeFasilitas('00f000')">
-		                                    <i class="nc-icon nc-simple-remove"></i>
+		                                    <i class="fas fa-times"></i>
 		                                </button>
 		                            </div>
 		                        </div>
@@ -235,14 +262,14 @@
 		                    <div class="col-md-12">
 		                        <div class="form-group">
 		                            <button class="btn btn-primary btn-fill" id="add_fasilitas">
-		                                <i class="nc-icon nc-simple-add"></i>
+		                                <i class="fas fa-plus"></i>
 		                            </button>
 		                        </div>
 		                    </div>
 		                </div>
 						<label for="radiusKampus">Jarak dari kampus <span id="valueRadius">500</span> (m)</label>
 						<input type="range" name="radius" class="custom-range" min="10" max="7000" step="10" value="500" id="radiusKampus">
-						<button type="button" id="filterBtn" class="btn btn-info">Filter</button>
+						<button type="button" id="filterBtn" class="btn btn-primary">Filter</button>
 					</form>
 				</div>
 			</div>
@@ -253,12 +280,12 @@
 			<div class="row">
 				<div class="col-8" style="border-right: 1px solid grey;">
 					<div class="carousel-wrappers">
-					   <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
-						  <ol class="carousel-indicators">
-						    <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
-						    <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
-						    <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
-						  </ol>
+					   <div id="carouselDetilIndekos" class="carousel slide" data-interval="false">
+						  <!-- <ol class="carousel-indicators">
+						    <li data-target="#carouselDetilIndekos" data-slide-to="0" class="active"></li>
+						    <li data-target="#carouselDetilIndekos" data-slide-to="1"></li>
+						    <li data-target="#carouselDetilIndekos" data-slide-to="2"></li>
+						  </ol> -->
 						  <div class="carousel-inner carousel-kos">
 						    <div class="carousel-item active">
 						      <img class="d-block w-100" src="<?= base_url('assets/img/kosabcd.jpeg') ?>" alt="First slide">
@@ -270,12 +297,14 @@
 						      <img class="d-block w-100" src="<?= base_url('assets/img/kosabcd.jpeg') ?>" alt="Third slide">
 						    </div>
 						  </div>
-						  <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
-						    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+						  <a class="carousel-control-prev" href="#carouselDetilIndekos" role="button" data-slide="prev">
+						    <span class="carousel-control-prev-icon" aria-hidden="true"><i class="fas fa-chevron-left"></i></span>
 						    <span class="sr-only">Previous</span>
 						  </a>
-						  <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
-						    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+						  <a class="carousel-control-next" href="#carouselDetilIndekos" role="button" data-slide="next">
+						    <span class="carousel-control-next-icon" aria-hidden="true">
+						    	<i class="fas fa-chevron-right"></i>
+						    </span>
 						    <span class="sr-only">Next</span>
 						  </a>
 						</div>
@@ -372,9 +401,17 @@
 <script src="<?= base_url('assets/js/core/popper.min.js') ?>" type="text/javascript" charset="utf-8"></script>
 <script src="<?= base_url('assets/js/core/bootstrap4.min.js') ?>" type="text/javascript" charset="utf-8"></script>
 <script src="<?= base_url('assets/js/core/leaflet.js') ?>" type="text/javascript" charset="utf-8"></script>
+<script src="<?= base_url() ?>assets/js/core/sidoarjo_border.js"></script>
 <script type="text/javascript" charset="utf-8">
 	var mymap = L.map('main_map').setView([-7.4667543241513785, 112.71683491492696], 15);
-	 L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+	L.geoJSON(sidoarjo_border, {
+		style : {
+			color : 'blue',
+			weight : 4,
+			fillOpacity: 0,
+		}
+	}).addTo(mymap);
+	L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
         maxZoom: 19,
         attribution: '&copy; <a href="https://openstreetmap.org/copyright">UMIKOS | OpenStreetMap OpenSource Maps API</a>'
     }).addTo(mymap);
@@ -428,7 +465,7 @@
 				let marker = L.marker([v.lat_kos, v.lng_kos]);
 				let popup = `
 					<div class="card popup" style="width: 15rem;">
-					  <img class="card-img-top" src="<?= base_url('assets/img/') ?>${JSON.parse(data.data[i].attachment)[0]}" alt="Card image cap">
+					  <img class="card-img-top" src="<?= base_url('imgkos/') ?>${JSON.parse(data.data[i].attachment)[0]}" alt="Card image cap">
 					  <div class="card-body">
 					    <h5 class="card-title popup-title">${data.data[i].nama_kos}</h5>
 					    	<table class="card-text">
@@ -441,7 +478,7 @@
 									<td>: Rp. ${data.data[i].tarif_kos},-</td>
 								</tr>
 							</table>
-					    <a href="#" class="btn btn-primary detil-popup-btn" onClick="detilKos('${data.data[i].id_kos}')" data-id="${data.data[i].id_kos}"></a>
+					    <a href="#" class="btn btn-primary detil-popup-btn" style="color: white;" onClick="detilKos('${data.data[i].id_kos}')" data-id="${data.data[i].id_kos}"><i class="fas fa-search"></i></a>
 					  </div>
 					</div>
 				`;
@@ -487,7 +524,7 @@
                     <div class="col-md-2 pl-1">
                         <div class="form-group">
                             <button class="btn btn-danger btn-fill pull-right remove_fasilitas" onClick="removeFasilitas('${f_unique}')">
-                                <i class="nc-icon nc-simple-remove"></i>
+                                <i class="fas fa-times"></i>
                             </button>
                         </div>
                     </div>
@@ -578,11 +615,11 @@
     			`;
     			let carousel = '';
     			let carousel_data = JSON.parse(data.attachment);
+    			let inc = 0;
     			carousel_data.forEach((i, v) => {
-    				let inc = 0;
     				carousel += `
     					<div class="carousel-item ${inc == 0 ? 'active' : ''} ${i}">
-					      <img class="d-block w-100" src="<?= base_url('assets/img/') ?>${i}">
+					      <img class="d-block" src="<?= base_url('imgkos/') ?>${i}">
 					    </div>
     				`;
     				inc++;
@@ -606,7 +643,11 @@
     			$('#detil-kos-telp').html(data.notelp_pemilik);
     		},
     	});
+    }
 
+    function removeFasilitas(el){
+        console.log(el);
+        $('div[data-fasilitas-wrapper="'+el+'"]').remove();
     }
 </script>
 </html>

@@ -35,6 +35,11 @@ class Kampus extends CI_Model {
 		return $this->db->delete('tb_kampus', ['id_kampus' => $id]);
 	}
 
+	public function count()
+	{
+		return $this->db->count_all('tb_kampus');
+	}
+
 }
 
 /* End of file Kampus.php */

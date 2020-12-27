@@ -50,6 +50,12 @@
     .navbar .navbar-nav .nav-item .nav-link{
         color: white;
     }
+    .navbar .navbar-brand:hover {
+        color: white;
+    }
+    .navbar .navbar-nav .nav-item .nav-link:hover {
+        color: white;
+    }
 </style>
 <body>
     <div class="wrapper">
@@ -92,12 +98,12 @@
             <!-- Navbar -->
             <nav class="navbar navbar-expand-lg " color-on-scroll="500">
                 <div class="container-fluid">
-                    <a class="navbar-brand" href="#pablo"> UMIKOS </a>
+                    <a class="navbar-brand" href="<?= base_url('main') ?>"><img src="<?= base_url('assets/img/').'umikosicon_white.png' ?>" width="30" height="30" alt=""> UMIKOS </a>
                     <div class="collapse navbar-collapse justify-content-end" id="navigation">
                         <ul class="nav navbar-nav mr-auto">
                             <li class="nav-item">
                                 <a href="#" class="nav-link" data-toggle="dropdown">
-                                    <span class="d-lg-none">UMIKOS</span>
+                                    <span class="d-lg-none"><img src="<?= base_url('assets/img/').'apple-icon.png' ?>" width="30" height="30" alt="">UMIKOS</span>
                                 </a>
                             </li>
                         </ul>
@@ -428,9 +434,9 @@
 <script type="text/javascript">
     $(document).ready(function() {
         // Javascript method's body can be found in assets/js/demos.js
-        demo.initDashboardPageCharts();
+        // demo.initDashboardPageCharts();
 
-        demo.showNotification();
+        // demo.showNotification();
 
     });
 </script>

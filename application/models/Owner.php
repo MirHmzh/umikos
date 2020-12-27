@@ -23,6 +23,12 @@ class Owner extends CI_Model {
 		return $this->db->get_where('tb_pemilik', ['id_pemilik' => $id])->row();
 	}
 
+	function get_owner($id)
+	{
+		$this->db->join('tb_user', 'tb_user.id_user = tb_pemilik.user_id', 'left');
+		return $this->db->get_where('tb_pemilik', ['user_id' => $id])->row();
+	}
+
 	function insert($data)
 	{
 		$userdata = ['email' => $data['email'], 'password' => $data['password'], 'role' => 2];
@@ -59,6 +65,11 @@ class Owner extends CI_Model {
 		$this->db->delete('tb_user', ['id_user' => $get->user_id]);
 		$trans = $this->db->delete('tb_pemilik', ['id_pemilik' => $id]);
 		return $trans;
+	}
+
+	public function count()
+	{
+		return $this->db->count_all('tb_pemilik');
 	}
 
 }

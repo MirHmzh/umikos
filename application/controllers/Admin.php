@@ -9,13 +9,25 @@ class Admin extends CI_Controller {
 		$this->load->model('Kos');
 		$this->load->model('Owner');
 		$this->load->model('Kampus');
+		if ($this->session->userdata('id') != 1) {
+			redirect('auth','refresh');
+		}
 	}
 
 	public function index()
 	{
 		$content = array('content' => 'admin/dashboard');
 		$content['active'] = 'dashboard';
+		$content['kampus_terdaftar'] = $this->Kampus->count();
+		$content['indekos_terdaftar'] = $this->Kos->count();
+		$content['owner_terdaftar'] = $this->Owner->count();
 		$this->load->view('layout/admin_base', $content);
+	}
+
+	public function get_indekos_dash()
+	{
+		$data = $this->Kos->get();
+		echo json_encode(['data' => $data]);
 	}
 
 	function kos()
@@ -50,16 +62,6 @@ class Admin extends CI_Controller {
 		$pemilik = $this->Owner->get();
 		if ($id) {
 			$kos = $this->Kos->get_where($id);
-			$f = json_decode($kos->f_lain, true);
-			echo "<pre>";
-			print_r($f[0]);
-			// echo reset($f[0]);
-			echo key($f[0]);
-			foreach ($f[0] as $k => $v) {
-				print_r($k);
-			}
-			echo "</pre>";
-			// exit;
 			$content = array('content' => 'admin/form_kos', 'id_kos' => $id, 'kos' => $kos, 'pemilik' => $pemilik);
 		}else{
 			$content = array('content' => 'admin/form_kos', 'pemilik' => $pemilik);
@@ -73,10 +75,17 @@ class Admin extends CI_Controller {
 		$payload = $this->input->post();
 		if($id){
 			$trans = $this->Kos->update($payload, $id);
-			$msg = 'Kos telah ditambahkan';
+			foreach ($attachment = json_decode($payload['attachment']) as $k => $v) {
+				$move = rename('temp/'.$v, 'imgkos/'.$v);
+				print_r('/var/www/html/umikos/temp/'.$v);
+			}
+			$msg = 'Kos telah diperbarui';
 		}else{
 			$trans = $this->Kos->insert($payload);
-			$msg = 'Kos telah diperbarui';
+			foreach ($attachment = json_decode($payload['attachment']) as $k => $v) {
+				$move = rename('temp/'.$v, 'imgkos/'.$v);
+			}
+			$msg = 'Kos telah ditambahkan';
 		}
 		echo json_encode(['msg' => $msg, 'data' => $trans]);
 	}
@@ -154,6 +163,9 @@ class Admin extends CI_Controller {
 
 	function form_kampus($id = null)
 	{
+		if ($id) {
+			$data['kampus'] = $this->Kampus->get_where(['id_kampus' => $id]);
+		}
 		$data['content'] = 'admin/form_kampus';
 		$data['active'] = 'kampus';
 		$this->load->view('layout/admin_base', $data);

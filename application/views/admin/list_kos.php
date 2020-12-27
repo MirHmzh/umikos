@@ -22,7 +22,7 @@
                             <h4 class="card-title">Indekos</h4>
                         </div>
                         <div class="col-6 add-wrapper">
-                            <a href="<?= base_url('main/form_kos') ?>" title="">
+                            <a href="<?= base_url('admin/form_kos') ?>" title="">
                                 <button type="button" class="btn btn-info btn-fill" id="btn-add"><i class="fa fa-plus"></i></button>
                             </a>
                         </div>

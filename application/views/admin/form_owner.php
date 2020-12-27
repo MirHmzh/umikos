@@ -58,7 +58,7 @@
                                 </div>
                             </div>
                         </div>
-                        <button class="btn btn-info btn-fill pull-right" id="save_profile">Save Profile</button>
+                        <button class="btn btn-info btn-fill pull-right" id="save_profile">Save</button>
                         <div class="clearfix"></div>
                     </form>
                 </div>
@@ -93,6 +93,9 @@
                   timer: 2000,
                 }).then((result) => {
                   window.location = "<?= base_url('admin/owner') ?>";
+                  if (result.dismiss === Swal.DismissReason.timer) {
+                    window.location = "<?= base_url('admin/owner') ?>";
+                  }
                 })
             },
         });
