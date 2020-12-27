@@ -73,104 +73,104 @@
                           <input type="radio" value="1" id="radio-laki" name="f_gender" class="custom-control-input" <?= isset($kos->f_gender) ? ($kos->f_gender == 1 ? 'checked' : '') : '' ?>>
                           <label class="custom-control-label" for="radio-laki">Laki-laki</label>
                       </div>
-                  </div>
-                  <div class="col-md-4 pl-1">
-                    <div class="custom-control custom-radio">
-                      <input type="radio" value="2" id="radio-perempuan" name="f_gender" class="custom-control-input" <?= isset($kos->f_gender) ? ($kos->f_gender == 2 ? 'checked' : '') : '' ?>>
-                      <label class="custom-control-label" for="radio-perempuan">Perempuan</label>
-                  </div>
-              </div>
-              <div class="col-md-4 pl-1">
-                <div class="custom-control custom-radio">
-                  <input type="radio" value="3" id="radio-pasutri" name="f_gender" class="custom-control-input" <?= isset($kos->f_gender) ? ($kos->f_gender == 3 ? 'checked' : '') : '' ?>>
-                  <label class="custom-control-label" for="radio-pasutri">Pasutri</label>
-              </div>
-          </div>
-      </div>
-      <br>
-      <div class="row">
-        <div class="col-md-12">
-            Lokasi
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-md-12">
-            <div id="kos-map">
+                    </div>
+                    <div class="col-md-4 pl-1">
+                        <div class="custom-control custom-radio">
+                            <input type="radio" value="2" id="radio-perempuan" name="f_gender" class="custom-control-input" <?= isset($kos->f_gender) ? ($kos->f_gender == 2 ? 'checked' : '') : '' ?>>
+                        <label class="custom-control-label" for="radio-perempuan">Perempuan</label>
+                        </div>
+                    </div>
+                    <div class="col-md-4 pl-1">
+                        <div class="custom-control custom-radio">
+                            <input type="radio" value="3" id="radio-pasutri" name="f_gender" class="custom-control-input" <?= isset($kos->f_gender) ? ($kos->f_gender == 3 ? 'checked' : '') : '' ?>>
+                            <label class="custom-control-label" for="radio-pasutri">Pasutri</label>
+                        </div>
+                    </div>
+                </div>
+                <br>
+                <div class="row">
+                    <div class="col-md-12">
+                        Lokasi
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div id="kos-map">
 
-            </div>
-        </div>
-    </div>
-    <br>
-    <div class="row">
-        <div class="col-md-12">
-            Fasilitas
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-md-4">
-            <div class="custom-control custom-switch">
-              <input type="checkbox" name="f_kamar_mandi" value="1" class="custom-control-input" id="switch-kmdalam" <?= isset($kos->f_kamar_mandi) ? ($kos->f_kamar_mandi == 1 ? 'checked' : '') : '' ?>>
-              <label class="custom-control-label" for="switch-kmdalam">KM Dalam</label>
-          </div>
-      </div>
-      <div class="col-md-4">
-        <div class="custom-control custom-switch">
-          <input type="checkbox" name="f_ac" value="1" class="custom-control-input" id="switch-ac" <?= isset($kos->f_ac) ? ($kos->f_ac == 1 ? 'checked' : '') : '' ?>>
-          <label class="custom-control-label" for="switch-ac">AC Kamar</label>
-      </div>
-  </div>
-  <div class="col-md-4">
-    <div class="custom-control custom-switch">
-      <input type="checkbox" name="f_listrik" value="1" class="custom-control-input" id="switch-listrik" <?= isset($kos->f_listrik) ? ($kos->f_listrik == 1 ? 'checked' : '') : '' ?>>
-      <label class="custom-control-label" for="switch-listrik">Listrik Include</label>
-  </div>
-</div>
-</div>
-<div class="fasilitas-tambahan-wrapper">
-    <?php foreach ($f_lain = json_decode($kos->f_lain, true) as $i => $v): ?>
-        <div class="row" data-fasilitas-wrapper="00f00<?= $i ?>">
-            <div class="col-md-5 pr-1">
-                <div class="form-group">
-                    <input type="text" name="f_tambahan_desc[]" class="form-control" placeholder="Fasilitas Tambahan" value="<?= key($f_lain[$i]) ?>">
+                        </div>
+                    </div>
                 </div>
-            </div>
-            <div class="col-md-5 pl-1">
-                <div class="form-group">
-                    <input type="text" name="f_tambahan_value[]" class="form-control" placeholder="Keterangan Fasilitas Tambahan" value="<?= reset($f_lain[$i]) ?>">
+                <br>
+                <div class="row">
+                    <div class="col-md-12">
+                        Fasilitas
+                    </div>
                 </div>
-            </div>
-            <div class="col-md-2 pl-1">
-                <div class="form-group">
-                    <button class="btn btn-danger btn-fill pull-right remove_fasilitas" onClick="removeFasilitas('00f00<?= $i ?>')">
-                        <i class="nc-icon nc-simple-remove"></i>
-                    </button>
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="custom-control custom-switch">
+                            <input type="checkbox" name="f_kamar_mandi" value="1" class="custom-control-input" id="switch-kmdalam" <?= isset($kos->f_kamar_mandi) ? ($kos->f_kamar_mandi == 1 ? 'checked' : '') : '' ?>>
+                            <label class="custom-control-label" for="switch-kmdalam">KM Dalam</label>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="custom-control custom-switch">
+                            <input type="checkbox" name="f_ac" value="1" class="custom-control-input" id="switch-ac" <?= isset($kos->f_ac) ? ($kos->f_ac == 1 ? 'checked' : '') : '' ?>>
+                            <label class="custom-control-label" for="switch-ac">AC Kamar</label>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="custom-control custom-switch">
+                            <input type="checkbox" name="f_listrik" value="1" class="custom-control-input" id="switch-listrik" <?= isset($kos->f_listrik) ? ($kos->f_listrik == 1 ? 'checked' : '') : '' ?>>
+                            <label class="custom-control-label" for="switch-listrik">Listrik Include</label>
+                        </div>
+                    </div>
                 </div>
-            </div>
-        </div>
-    <?php endforeach ?>
-</div>
-<div class="row">
-    <div class="col-md-12">
-        <div class="form-group">
-            <button class="btn btn-primary btn-fill" id="add_fasilitas">
-                <i class="nc-icon nc-simple-add"></i>
-            </button>
+                <div class="fasilitas-tambahan-wrapper">
+                    <?php foreach ($f_lain = json_decode($kos->f_lain, true) as $i => $v): ?>
+                        <div class="row" data-fasilitas-wrapper="00f00<?= $i ?>">
+                            <div class="col-md-5 pr-1">
+                                <div class="form-group">
+                                    <input type="text" name="f_tambahan_desc[]" class="form-control" placeholder="Fasilitas Tambahan" value="<?= key($f_lain[$i]) ?>">
+                                </div>
+                            </div>
+                            <div class="col-md-5 pl-1">
+                                <div class="form-group">
+                                    <input type="text" name="f_tambahan_value[]" class="form-control" placeholder="Keterangan Fasilitas Tambahan" value="<?= reset($f_lain[$i]) ?>">
+                                </div>
+                            </div>
+                            <div class="col-md-2 pl-1">
+                                <div class="form-group">
+                                    <button class="btn btn-danger btn-fill pull-right remove_fasilitas" onClick="removeFasilitas('00f00<?= $i ?>')">
+                                        <i class="nc-icon nc-simple-remove"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    <?php endforeach ?>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <button class="btn btn-primary btn-fill" id="add_fasilitas">
+                                <i class="nc-icon nc-simple-add"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        Foto
+                    </div>
+                </div>
+                <div class="dz-message">Klik disini atau lepaskan berkas untuk mengunggah foto indekos Anda
+                    <br>
+                </div>
+                <button id="save_kos" class="btn btn-info btn-fill pull-right">Simpan</button>
+                <div class="clearfix"></div>
+            </form>
         </div>
     </div>
-</div>
-<div class="row">
-    <div class="col-md-12">
-        Foto
-    </div>
-</div>
-<div class="dz-message">Klik disini atau lepaskan berkas untuk mengunggah foto indekos Anda
-    <br>
-</div>
-<button id="save_kos" class="btn btn-info btn-fill pull-right">Simpan</button>
-<div class="clearfix"></div>
-</form>
-</div>
-</div>
 </div>
 <script type="text/javascript" charset="utf-8">
     Dropzone.autoDiscover = false;
@@ -196,7 +196,6 @@
                             name: '<?= base_url('imgkos/') ?>'+global_attachment[i],
                             dataUrl: '<?= base_url('imgkos/') ?>'+global_attachment[i],
                             imageUrl: '<?= base_url('imgkos/') ?>'+global_attachment[i],
-                            // size: 12345,
                             uuid : global_attachment[i],
                             url: '<?= base_url('imgkos/') ?>'+global_attachment[i]
                         };
