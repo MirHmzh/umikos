@@ -19,6 +19,7 @@ class Kos extends CI_Model {
 
 	function get_table_owned($datatable, $id)
 	{
+		$this->db->where('tb_indekos.id_pemilik', $id);
 		$data['total'] = $this->db->count_all_results('tb_indekos');
 		$this->db->select('tb_indekos.*, owner.nama_pemilik, owner.notelp_pemilik');
 		$this->db->join('tb_pemilik as owner', 'owner.id_pemilik = tb_indekos.id_pemilik', 'left');

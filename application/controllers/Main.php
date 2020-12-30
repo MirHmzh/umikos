@@ -21,6 +21,7 @@ class Main extends CI_Controller {
 
 	function get_kos()
 	{
+		$pemilik = $this->Owner->get_owner($this->session->userdata('id'));
 		$col = ['', '', '', '', ''];
 		$requesttable = [
 			'start' => $this->input->post('start'),
@@ -29,7 +30,7 @@ class Main extends CI_Controller {
 			'column' => $col[$this->input->post('order[0][column]')],
 			'column_order' => $this->input->post('order[0][dir]')
 		];
-		$kos = $this->Kos->get_table_owned($requesttable, $this->session->userdata('id'));
+		$kos = $this->Kos->get_table_owned($requesttable, $pemilik->id_pemilik);
 		$datatable = [
 			'draw' => $this->input->post('draw'),
 			'recordsTotal' => $kos['total'],

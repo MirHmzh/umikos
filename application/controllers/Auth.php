@@ -23,7 +23,7 @@ class Auth extends CI_Controller {
 	{
 		$data = $this->Authm->login($this->input->post());
 		if (!empty($data)) {
-			if ($data->role == 1) {
+			if ($data->role == 2) {
 				$array = array(
 					'id' => $data->id_user,
 					'email' => $data->email,

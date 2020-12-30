@@ -2,14 +2,16 @@
 <html>
 <head>
 	<title>
-		Cari Kos Dekat Kampusmu! | UMIKOS
+		Bergabung dengan UMIKOS | UMIKOS
 	</title>
+	<link rel="apple-touch-icon" sizes="76x76" href="<?= base_url() ?>assets/img/apple-icon.png">
+    <link rel="icon" type="image/png" href="<?= base_url() ?>assets/img/favicon.ico">
 	<link rel="stylesheet" type="text/css" href="<?= base_url('assets/css/bootstrap4.min.css') ?>">
 	<link rel="stylesheet" type="text/css" href="<?= base_url('assets/css/leaflet.css') ?>">
 	<link rel="stylesheet" type="text/css" href="<?= base_url('assets/css/all.min.css') ?>">
 </head>
 <style type="text/css" media="screen">
-	body {
+	/*body {
 	  display: -ms-flexbox;
 	  display: flex;
 	  -ms-flex-align: center;
@@ -17,7 +19,7 @@
 	  padding-top: 40px;
 	  padding-bottom: 40px;
 	  background-color: #f5f5f5;
-	}
+	}*/
 
 	.form-signin {
 	  width: 100%;
@@ -42,44 +44,64 @@
 	.signup-wrapper{
 		display: none;
 	}
+	.brand-wrapper{
+		text-align: center;
+		padding: 2em;
+	}
+	.brand{
+		width: 10em;
+	}
+	.row{
+		margin: 0 !important;
+	}
 </style>
 <body>
-	<form class="form-signin">
-		  	<div class="signin-wrapper">
-		  		<div class="form-group">
-			    	<input type="email" name="email_login" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Email">
-			  	</div>
-			  	<div class="form-group">
-			    	<input type="password" name="password_login" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Password">
-			  	</div>
-			  	<div class="form-group">
-			    	<small>Belum punya akun? <a href="#" class="badge badge-success" id="switch-signup">Daftar</a></small>
-			  	</div>
-			  	<button class="btn btn-primary" id="btn_masuk">Masuk</button>
-		  	</div>
+	<div class="row">
+		<div class="col-md-12 brand-wrapper">
+			<img class="brand" src="<?= base_url('assets/img/apple-icon.png') ?>" alt="">
+		</div>
+	</div>
 
-		  	<div class="signup-wrapper">
-		  		<div class="form-group">
-			    	<input type="text" name="nama_pemilik" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Nama">
-			  	</div>
-			  	<div class="form-group">
-			    	<input type="text" name="notelp_pemilik" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="No. Telp">
-			  	</div>
-			  	<div class="form-group">
-			    	<textarea name="alamat_pemilik" class="form-control" id="exampleFormControlTextarea1" rows="3" placeholder="Alamat"></textarea>
-			  	</div>
-			  	<div class="form-group">
-			    	<input name="email_register" type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Email">
-			  	</div>
-			  	<div class="form-group">
-			    	<input type="password" name="password_register" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Password">
-			  	</div>
-			  	<div class="form-group">
-			    	<small>Sudah punya akun? <a href="#" class="badge badge-primary" id="switch-signin">Masuk</a></small>
-			  	</div>
-			  	<button class="btn btn-primary" id="btn_daftar">Daftar</button>
-		  	</div>
-	</form>
+	<div class="row">
+		<div class="col-md-12">
+			<form class="form-signin">
+				  	<div class="signin-wrapper">
+				  		<div class="form-group">
+					    	<input type="email" name="email_login" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Email">
+					  	</div>
+					  	<div class="form-group">
+					    	<input type="password" name="password_login" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Password">
+					  	</div>
+					  	<div class="form-group">
+					    	<small>Belum punya akun? <a href="#" class="badge badge-success" id="switch-signup">Daftar</a></small>
+					  	</div>
+					  	<button class="btn btn-primary" id="btn_masuk">Masuk</button>
+				  	</div>
+
+				  	<div class="signup-wrapper">
+				  		<div class="form-group">
+					    	<input type="text" name="nama_pemilik" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Nama">
+					  	</div>
+					  	<div class="form-group">
+					    	<input type="text" name="notelp_pemilik" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="No. Telp">
+					  	</div>
+					  	<div class="form-group">
+					    	<textarea name="alamat_pemilik" class="form-control" id="exampleFormControlTextarea1" rows="3" placeholder="Alamat"></textarea>
+					  	</div>
+					  	<div class="form-group">
+					    	<input name="email_register" type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Email">
+					  	</div>
+					  	<div class="form-group">
+					    	<input type="password" name="password_register" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Password">
+					  	</div>
+					  	<div class="form-group">
+					    	<small>Sudah punya akun? <a href="#" class="badge badge-primary" id="switch-signin">Masuk</a></small>
+					  	</div>
+					  	<button class="btn btn-primary" id="btn_daftar">Daftar</button>
+				  	</div>
+			</form>
+		</div>
+	</div>
 </body>
 <script src="<?= base_url('assets/js/core/jquery.3.2.1.min.js') ?>" type="text/javascript" charset="utf-8"></script>
 <script src="<?= base_url('assets/js/core/popper.min.js') ?>" type="text/javascript" charset="utf-8"></script>

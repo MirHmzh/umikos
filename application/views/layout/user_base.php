@@ -7,6 +7,8 @@
 	<link rel="stylesheet" type="text/css" href="<?= base_url('assets/css/bootstrap4.min.css') ?>">
 	<link rel="stylesheet" type="text/css" href="<?= base_url('assets/css/leaflet.css') ?>">
 	<link rel="stylesheet" type="text/css" href="<?= base_url('assets/css/all.min.css') ?>">
+	<link rel="apple-touch-icon" sizes="76x76" href="<?= base_url() ?>assets/img/apple-icon.png">
+    <link rel="icon" type="image/png" href="<?= base_url() ?>assets/img/favicon.ico">
 </head>
 <style type="text/css" media="screen">
 	body{
@@ -554,8 +556,32 @@
     		data: formData,
     		success : (data) => {
     			console.log(data);
+				// $.each(data.data, function(i, v) {
+				// 	let marker = L.marker([v.lat_kos, v.lng_kos]);
+				// 	layerGroup.addLayer(marker);
+				// });
 				$.each(data.data, function(i, v) {
 					let marker = L.marker([v.lat_kos, v.lng_kos]);
+					let popup = `
+						<div class="card popup" style="width: 15rem;">
+						  <img class="card-img-top" src="<?= base_url('imgkos/') ?>${JSON.parse(data.data[i].attachment)[0]}" alt="Card image cap">
+						  <div class="card-body">
+						    <h5 class="card-title popup-title">${data.data[i].nama_kos}</h5>
+						    	<table class="card-text">
+									<tr>
+										<td>Gender</td>
+										<td>: ${data.data[i].f_gender == 1 ? 'Laki-laki' : (data.data[i].f_gender == 2 ? 'Perempuan' : 'Pasutri')}</td>
+									</tr>
+									<tr>
+										<td>Tarif</td>
+										<td>: Rp. ${data.data[i].tarif_kos},-</td>
+									</tr>
+								</table>
+						    <a href="#" class="btn btn-primary detil-popup-btn" style="color: white;" onClick="detilKos('${data.data[i].id_kos}')" data-id="${data.data[i].id_kos}"><i class="fas fa-search"></i></a>
+						  </div>
+						</div>
+					`;
+					marker.bindPopup(popup).openPopup();
 					layerGroup.addLayer(marker);
 				});
 				var overlay = {'markers': layerGroup};

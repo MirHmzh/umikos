@@ -11,6 +11,7 @@
     .dropzone .dz-preview .dz-remove{
         background: #dc3545;
         text-decoration: none;
+        color: white;
     }
     .dropzone .dz-preview .dz-remove:hover{
         color: white;
