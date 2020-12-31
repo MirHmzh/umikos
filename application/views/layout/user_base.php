@@ -13,7 +13,7 @@
     <link rel="icon" type="image/png" href="<?= base_url() ?>assets/img/favicon.ico">
     <meta property="og:site_name" content="UMIKOS">
 	<meta property="og:title" content="UMIKOS" />
-	<meta property="og:description" content="Cari kos dekat kampusmu!" />
+	<meta property="og:description" content="Cari kos dekat kampusmu di Sidoarjo!" />
 	<meta property="og:image" itemprop="image" content="https://umikos.mirhmzh.com/assets/img/banner.png">
 	<meta property="og:type" content="website" />
 </head>
