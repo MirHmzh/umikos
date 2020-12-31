@@ -14,7 +14,7 @@
     <meta property="og:site_name" content="UMIKOS">
 	<meta property="og:title" content="UMIKOS" />
 	<meta property="og:description" content="Cari kos dekat kampusmu!" />
-	<meta property="og:image" itemprop="image" content="https://umikos.mirhmzh.com/assets/img/kosabcd.jpeg">
+	<meta property="og:image" itemprop="image" content="https://umikos.mirhmzh.com/assets/img/banner.png">
 	<meta property="og:type" content="website" />
 </head>
 <style type="text/css" media="screen">
