@@ -4,11 +4,18 @@
 	<title>
 		Cari Kos Dekat Kampusmu! | UMIKOS
 	</title>
+	<meta name = "keywords" content = "UMIKOS, Kos, Indekos" />
+	<meta name = "description" content = "Cari kos terdekat di Kampusmu!" />
 	<link rel="stylesheet" type="text/css" href="<?= base_url('assets/css/bootstrap4.min.css') ?>">
 	<link rel="stylesheet" type="text/css" href="<?= base_url('assets/css/leaflet.css') ?>">
 	<link rel="stylesheet" type="text/css" href="<?= base_url('assets/css/all.min.css') ?>">
 	<link rel="apple-touch-icon" sizes="76x76" href="<?= base_url() ?>assets/img/apple-icon.png">
     <link rel="icon" type="image/png" href="<?= base_url() ?>assets/img/favicon.ico">
+    <meta property="og:site_name" content="UMIKOS">
+	<meta property="og:title" content="UMIKOS" />
+	<meta property="og:description" content="Cari kos dekat kampusmu!" />
+	<meta property="og:image" itemprop="image" content="https://umikos.mirhmzh.com/assets/img/kosabcd.jpeg">
+	<meta property="og:type" content="website" />
 </head>
 <style type="text/css" media="screen">
 	body{
