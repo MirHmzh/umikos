@@ -170,8 +170,32 @@
 	.carousel-control-next, .carousel-control-prev{
 		color: black;
 	}
+	.cover{
+		position: absolute;
+		width: 100vw;
+		height: 100vh;
+		background-color: rgba(0,0,0,0.7);
+		z-index: 5;
+		display: none;
+	}
+	.caption-wrapper{
+		color: white;
+		position: fixed;
+		top: 50%;
+		left: 50%;
+		max-width: 15em;
+		transform: translate(-50%, -50%);
+	}
 </style>
 <body>
+	<div class="cover">
+		<div class="caption-wrapper">
+			<h4></h4>
+			<div class="caption-action-wrapper">
+				<button type="button" class="btn btn-secondary skip-cover">Skip</button>
+			</div>
+		</div>
+	</div>
 	<div id="main_map">
 
 	</div>
@@ -269,8 +293,8 @@
 		                        </div>
 		                    </div>
 		                </div>
-						<label for="radiusKampus">Jarak dari kampus <span id="valueRadius">500</span> (m)</label>
-						<input type="range" name="radius" class="custom-range" min="10" max="7000" step="10" value="500" id="radiusKampus">
+						<label for="radiusKampus">Jarak dari kampus <span id="valueRadius">3000</span> (m)</label>
+						<input type="range" name="radius" class="custom-range" min="10" max="7000" step="10" value="3000" id="radiusKampus">
 						<button type="button" id="filterBtn" class="btn btn-primary">Filter</button>
 					</form>
 				</div>
@@ -405,7 +429,30 @@
 <script src="<?= base_url('assets/js/core/leaflet.js') ?>" type="text/javascript" charset="utf-8"></script>
 <script src="<?= base_url() ?>assets/js/core/sidoarjo_border.js"></script>
 <script type="text/javascript" charset="utf-8">
-	var mymap = L.map('main_map').setView([-7.4667543241513785, 112.71683491492696], 15);
+	let hl = [
+		{
+			'text': 'Cari indekos di Sidoarjo sesuai keinginan Anda dengan filter lengkap!',
+			'menu' : '.side-menu'
+		},
+		{
+			'text': 'Cari indekos di Sidoarjo dengan alamat atau nama ownernya',
+			'menu' : '.search-wrapper'
+		},
+		{
+			'text': 'Pilih kampus Anda untuk mencari indekos terdekat!',
+			'menu' : '.kampus-wrapper'
+		},
+		{
+			'text': 'Ingin indekos Anda terdaftar di sini? Silakan masuk',
+			'menu' : '.owner-wrapper'
+		},
+		{
+			'text' : 'Anda bisa memulai menjelajah indekos dengan klik pin lokasi pada peta',
+			'menu' : ''
+		}
+	];
+	let hl_c = 0;
+	var mymap = L.map('main_map').setView([-7.4667543241513785, 112.71683491492696], 14);
 	L.geoJSON(sidoarjo_border, {
 		style : {
 			color : 'blue',
@@ -428,10 +475,13 @@
 	    fillColor: 'blue',
 	    weight: 0,
 	    fillOpacity: 0.4,
-	    radius: 500
+	    radius: 3000
 	}).addTo(mymap);
 	let menu = true;
 	$(document).ready(function() {
+		$('.caption-wrapper h4').text(hl[hl_c].text);
+		$(hl[hl_c].menu).css({ 'z-index' : 6 });
+		$('.cover').fadeIn();
 		// document.querySelector(".leaflet-popup-pane").addEventListener("load", function (event) {
 		//   	var tagName = event.target.tagName,
 		//     	popup = mymap._popup; // Currently open popup, if any.
@@ -440,6 +490,7 @@
 		//     	popup.update();
 		//   	}
 		// }, true);
+		$('#filterBtn').click();
 		$('.side-menu-grabber').click(() => {
 			let side_menu_content_wrapper_w = $('.side-menu-content-wrapper').outerWidth();
 			// let side_menu_content_wrapper_css = $('.side-menu-content-wrapper').css();
@@ -458,6 +509,15 @@
 
 	mymap.on('click', clickMap);
 
+	$('.skip-cover').click((event) => {
+		event.stopPropagation();
+		hl_c = 4;
+		$(hl[hl_c-1].menu).css({ 'z-index' : '1' });
+    	$('.caption-wrapper h4').text(hl[hl_c].text);
+    	setTimeout(() => {
+    		$('.cover').fadeOut();
+    	}, 1000);
+	});
 	$('#cari_kos').on('input', () => {
 		layerGroup.clearLayers();
 		let query = $('#cari_kos').val();
@@ -588,9 +648,23 @@
 				L.control.layers(null, overlay).addTo(mymap);
     		},
     	});
-
     });
-
+    $('.cover').click(() => {
+    	hl_c++;
+    	if (hl_c <= 3) {
+	    	$(hl[hl_c-1].menu).css({ 'z-index' : '1' });
+	    	$(hl[hl_c].menu).css({ 'z-index' : '6' });
+	    	$('.caption-wrapper h4').text(hl[hl_c].text);
+    	}else if(hl_c == 4){
+    		$(hl[hl_c-1].menu).css({ 'z-index' : '1' });
+	    	$('.caption-wrapper h4').text(hl[hl_c].text);
+	    	setTimeout(() => {
+	    		$('.cover').fadeOut();
+	    	}, 1000);
+    	}else{
+    		$('.cover').fadeOut();
+    	}
+    });
     $('.close-popup').click(() => {
     	$('.detil-popup-wrapper').css({ bottom: '-100vh' });
     });
