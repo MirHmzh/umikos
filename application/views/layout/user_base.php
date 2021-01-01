@@ -660,6 +660,9 @@
     });
     $('.cover').click(() => {
     	hl_c++;
+    	if (hl_c == 2) {
+    		$("html, body").animate({ scrollTop: $(document).height() }, 500);
+    	}
     	if (hl_c <= 3) {
 	    	$(hl[hl_c-1].menu).css({ 'z-index' : '1' });
 	    	$(hl[hl_c].menu).css({ 'z-index' : '6' });
