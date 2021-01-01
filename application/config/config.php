@@ -23,7 +23,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 | a PHP script and you can easily do that on your own.
 |
 */
-$config['base_url'] = 'http://178.128.16.191/umikos/';
+$config['base_url'] = 'http://localhost/umikos';
 
 /*
 |--------------------------------------------------------------------------
