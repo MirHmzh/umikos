@@ -125,6 +125,7 @@
 	}
 	.close-popup{
 		margin-left: 100%;
+		font-size: 2em;
 	}
 	.close-popup-wrapper{
 		padding: 1em 3em 0em 0em;
