@@ -11,7 +11,7 @@
 	<link rel="stylesheet" type="text/css" href="<?= base_url('assets/css/all.min.css') ?>">
 	<link rel="apple-touch-icon" sizes="76x76" href="<?= base_url() ?>assets/img/apple-icon.png">
     <link rel="icon" type="image/png" href="<?= base_url() ?>assets/img/favicon.ico">
-    <meta name="viewport">
+    <!-- <meta name="viewport" content="height=device-height, initial-scale=0.3"> -->
     <meta property="og:site_name" content="UMIKOS">
 	<meta property="og:title" content="UMIKOS" />
 	<meta property="og:description" content="Cari kos dekat kampusmu di Sidoarjo!" />
@@ -19,9 +19,10 @@
 	<meta property="og:type" content="website" />
 </head>
 <style type="text/css" media="screen">
-	html, body{
+	body{
 		overflow: hidden;
-		position: relative;
+		position: fixed;
+		height: 100%;
 	}
 	#main_map{
 		height: 100vh;
@@ -95,7 +96,7 @@
 		border: 0;
 	}
 	.detil-popup-wrapper{
-		height: 100vh;
+		height: 100%;
 		width: 100vw;
 		position: absolute;
 		bottom: -100vh;
@@ -126,10 +127,10 @@
 		margin-left: 100%;
 	}
 	.close-popup-wrapper{
-		padding: 1em 3em;
+		padding: 1em 3em 0em 0em;
 	}
 	.detil-kos-wrapper{
-		padding: 1em 2em;
+		padding: 1em 2em 0em;
 	}
 	#detil-kos-name-caption{
 		font-weight: 900;
@@ -195,8 +196,14 @@
 		max-width: 15em;
 		transform: translate(-50%, -50%);
 	}
+	#control-height {
+	    height: 100vh;
+	    width: 0;
+	    position: absolute;
+	}
 </style>
 <body>
+	<div id="control-height"></div>
 	<div class="cover">
 		<div class="caption-wrapper">
 			<h4></h4>
@@ -660,9 +667,6 @@
     });
     $('.cover').click(() => {
     	hl_c++;
-    	if (hl_c == 2) {
-    		$("body").animate({ scrollTop: '5em' }, 500);
-    	}
     	if (hl_c <= 3) {
 	    	$(hl[hl_c-1].menu).css({ 'z-index' : '1' });
 	    	$(hl[hl_c].menu).css({ 'z-index' : '6' });
@@ -682,7 +686,14 @@
     });
 
     function detilKos(id) {
-    	$('.detil-popup-wrapper').css({ bottom: '0vh' });
+    	// $('.detil-popup-wrapper').css({ bottom: '-10vh' });
+  //   	const actualHeight = $('html').height();
+		// const elementHeight = $('#main_map').height();
+		// alert(actualHeight);
+		// alert(elementHeight);
+		// const barHeight = elementHeight - actualHeight;
+		// alert(barHeight);
+		$('.detil-popup-wrapper').css({ bottom: '-5vh' });
     	$.ajax({
     		url: 'Landing/get_kos/'+id,
     		type: 'GET',
