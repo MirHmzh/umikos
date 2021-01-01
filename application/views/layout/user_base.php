@@ -30,7 +30,7 @@
 	}
 	.kampus-wrapper{
 		position: absolute;
-		bottom: 3.5em;
+		bottom: 2em;
 		left: 3.5em;
 		z-index: 1;
 	}
@@ -660,6 +660,9 @@
     });
     $('.cover').click(() => {
     	hl_c++;
+    	if (hl_c == 2) {
+    		$("body").animate({ scrollTop: '5em' }, 500);
+    	}
     	if (hl_c <= 3) {
 	    	$(hl[hl_c-1].menu).css({ 'z-index' : '1' });
 	    	$(hl[hl_c].menu).css({ 'z-index' : '6' });
