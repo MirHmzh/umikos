@@ -8,7 +8,7 @@ class Main extends CI_Controller {
 		parent::__construct();
 		$this->load->model('Kos');
 		$this->load->model('Owner');
-		if ($this->session->userdata('id') != 2) {
+		if ($this->session->userdata('role') != 2) {
 			redirect('auth','refresh');
 		}
 	}
