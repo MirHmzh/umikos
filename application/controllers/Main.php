@@ -54,18 +54,17 @@ class Main extends CI_Controller {
 	function save_kos($id = null)
 	{
 		$payload = $this->input->post();
+		$payload['id_pemilik'] = $this->session->userdata('id');
 		if($id){
 			$trans = $this->Kos->update($payload, $id);
 			foreach ($attachment = json_decode($payload['attachment']) as $k => $v) {
 				$move = rename('temp/'.$v, 'imgkos/'.$v);
-				print_r('/var/www/html/umikos/temp/'.$v);
 			}
 			$msg = 'Kos telah ditambahkan';
 		}else{
 			$trans = $this->Kos->insert($payload);
 			foreach ($attachment = json_decode($payload['attachment']) as $k => $v) {
 				$move = rename('temp/'.$v, 'imgkos/'.$v);
-				print_r('/var/www/html/umikos/temp/'.$v);
 			}
 			$msg = 'Kos telah diperbarui';
 		}

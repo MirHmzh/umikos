@@ -282,14 +282,14 @@
     $('#save_kos').click((e) => {
         e.preventDefault();
         Swal.fire({
-          title: 'Menyimpan',
-          text: 'Sedang memproses permintaan Anda',
-          showConfirmButton: false,
-          allowOutsideClick: false,
-          onBeforeOpen: () => {
-            Swal.showLoading()
-        },
-    });
+              title: 'Menyimpan',
+              text: 'Sedang memproses permintaan Anda',
+              showConfirmButton: false,
+              allowOutsideClick: false,
+              onBeforeOpen: () => {
+                Swal.showLoading()
+            },
+        });
         let f_tambahan_desc = $('input[name="f_tambahan_desc[]"]').map(function(){return $(this).val();}).get();
         let f_tambahan_value = $('input[name="f_tambahan_value[]"]').map(function(){return $(this).val();}).get();
         let f_tambahan = [];
