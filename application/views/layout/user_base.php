@@ -569,7 +569,6 @@
 		}, 'json');
 	});
 	$('.dropdown-item').click((e) => {
-		$('#filterBtn').click();
 		let lng = $(e.target).attr('data-lng');
 		let lat = $(e.target).attr('data-lat');
 		$('.dropdown-item').removeClass('active');
@@ -587,6 +586,7 @@
 		mymap.panTo(new L.LatLng(lat, lng));
 		kampusmarker = L.marker([lat, lng], {icon:kampusIcon}).addTo(mymap);
 		$('.dropdown-toggle').text($(e.target).text());
+		$('#filterBtn').click();
 	});
 	$('#radiusKampus').change((e) => {
 		$('#valueRadius').text($('#radiusKampus').val());
