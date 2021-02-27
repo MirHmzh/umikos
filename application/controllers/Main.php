@@ -54,7 +54,7 @@ class Main extends CI_Controller {
 	function save_kos($id = null)
 	{
 		$payload = $this->input->post();
-		$payload['id_pemilik'] = $this->session->userdata('id');
+		$payload['id_pemilik'] = $this->session->userdata('id_pemilik');
 		if($id){
 			$trans = $this->Kos->update($payload, $id);
 			foreach ($attachment = json_decode($payload['attachment']) as $k => $v) {

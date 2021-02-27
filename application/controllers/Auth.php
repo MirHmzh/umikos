@@ -26,6 +26,7 @@ class Auth extends CI_Controller {
 			if ($data->role == 2) {
 				$array = array(
 					'id' => $data->id_user,
+					'owner' $data->id_pemilik,
 					'email' => $data->email,
 					'role' => $data->role,
 					'name' => $data->nama_pemilik
