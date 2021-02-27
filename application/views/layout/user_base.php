@@ -575,6 +575,7 @@
 		$(e.target).addClass('active');
 		mymap.removeLayer(radius);
 		mymap.removeLayer(kampusmarker);
+		layerGroup.clearLayers();
 		radius = L.circle([lat, lng], {
 		    color: 'blue',
 		    fillColor: 'blue',

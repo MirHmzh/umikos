@@ -1,3 +1,5 @@
 config.php
 database.php
 .gitignore
+imgkos/
+temp/
