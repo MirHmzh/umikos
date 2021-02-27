@@ -569,6 +569,7 @@
 		}, 'json');
 	});
 	$('.dropdown-item').click((e) => {
+		$('#filterBtn').click();
 		let lng = $(e.target).attr('data-lng');
 		let lat = $(e.target).attr('data-lat');
 		$('.dropdown-item').removeClass('active');
