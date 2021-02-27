@@ -128,27 +128,29 @@
                     </div>
                 </div>
                 <div class="fasilitas-tambahan-wrapper">
-                    <?php foreach ($f_lain = json_decode($kos->f_lain, true) as $i => $v): ?>
-                        <div class="row" data-fasilitas-wrapper="00f00<?= $i ?>">
-                            <div class="col-md-5 pr-1">
-                                <div class="form-group">
-                                    <input type="text" name="f_tambahan_desc[]" class="form-control" placeholder="Fasilitas Tambahan" value="<?= key($f_lain[$i]) ?>">
+                    <?php if (isset($kos->f_lain)) { ?>
+                        <?php foreach ($f_lain = json_decode($kos->f_lain, true) as $i => $v): ?>
+                            <div class="row" data-fasilitas-wrapper="00f00<?= $i ?>">
+                                <div class="col-md-5 pr-1">
+                                    <div class="form-group">
+                                        <input type="text" name="f_tambahan_desc[]" class="form-control" placeholder="Fasilitas Tambahan" value="<?= key($f_lain[$i]) ?>">
+                                    </div>
+                                </div>
+                                <div class="col-md-5 pl-1">
+                                    <div class="form-group">
+                                        <input type="text" name="f_tambahan_value[]" class="form-control" placeholder="Keterangan Fasilitas Tambahan" value="<?= reset($f_lain[$i]) ?>">
+                                    </div>
+                                </div>
+                                <div class="col-md-2 pl-1">
+                                    <div class="form-group">
+                                        <button class="btn btn-danger btn-fill pull-right remove_fasilitas" onClick="removeFasilitas('00f00<?= $i ?>')">
+                                            <i class="nc-icon nc-simple-remove"></i>
+                                        </button>
+                                    </div>
                                 </div>
                             </div>
-                            <div class="col-md-5 pl-1">
-                                <div class="form-group">
-                                    <input type="text" name="f_tambahan_value[]" class="form-control" placeholder="Keterangan Fasilitas Tambahan" value="<?= reset($f_lain[$i]) ?>">
-                                </div>
-                            </div>
-                            <div class="col-md-2 pl-1">
-                                <div class="form-group">
-                                    <button class="btn btn-danger btn-fill pull-right remove_fasilitas" onClick="removeFasilitas('00f00<?= $i ?>')">
-                                        <i class="nc-icon nc-simple-remove"></i>
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-                    <?php endforeach ?>
+                        <?php endforeach ?>
+                    <?php } ?>
                 </div>
                 <div class="row">
                     <div class="col-md-12">
@@ -175,7 +177,7 @@
 </div>
 <script type="text/javascript" charset="utf-8">
     Dropzone.autoDiscover = false;
-    let global_attachment = <?= isset($kos->attachment) ? $kos->attachment : '' ?>;
+    let global_attachment = "<?= isset($kos->attachment) ? $kos->attachment : '' ?>";
     let global_lat = "<?= isset($kos->lat_kos) ? $kos->lat_kos : '' ?>";
     let global_lng = "<?= isset($kos->lng_kos) ? $kos->lng_kos : '' ?>";
     let kos_marker;
