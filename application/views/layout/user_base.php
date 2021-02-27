@@ -581,7 +581,7 @@
 		    fillColor: 'blue',
 		    fillOpacity: 0.4,
 		    weight: 0,
-		    radius: 500
+		    radius: 3000
 		}).addTo(mymap);
 		mymap.panTo(new L.LatLng(lat, lng));
 		kampusmarker = L.marker([lat, lng], {icon:kampusIcon}).addTo(mymap);
