@@ -294,9 +294,9 @@
 		                        </div>
 		                        <div class="col-md-2 pl-1">
 		                            <div class="form-group">
-		                                <button class="btn btn-danger btn-fill pull-right remove_fasilitas" onClick="removeFasilitas('00f000')">
+		                                <!-- <button class="btn btn-danger btn-fill pull-right remove_fasilitas" onClick="removeFasilitas('00f000')">
 		                                    <i class="fas fa-times"></i>
-		                                </button>
+		                                </button> -->
 		                            </div>
 		                        </div>
 		                    </div>
@@ -425,7 +425,7 @@
 								<div class="row detil-kos-telp-wrapper">
 									Contact : &nbsp;
 									<span id="detil-kos-owner">
-										Lekjon
+										Pemilik Kos
 									</span>
 									&nbsp;@&nbsp;
 									<span id="detil-kos-telp">

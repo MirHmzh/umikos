@@ -78,16 +78,23 @@ class Kos extends CI_Model {
 			ACOS( SIN( RADIANS( `lat_kos` ) ) * SIN( RADIANS( ".$data['lat']." ) ) + COS( RADIANS( `lat_kos` ) )
 * COS( RADIANS( ".$data['lat']." )) * COS( RADIANS( `lng_kos` ) - RADIANS( ".$data['lng']." )) ) * 6380 < (".$data['radius']."/1000)
 			");
-		$this->db->group_start();
-		if (isset($data['f_km'])) { $this->db->where('f_kamar_mandi', 1); }
-		if (isset($data['f_ac'])) { $this->db->where('f_ac', 1); }
-		if (isset($data['f_listrik'])) { $this->db->where('f_listrik', 1); }
-		if ($data['f_tambahan_desc']) {
-			foreach ($data['f_tambahan_desc'] as $k => $v) {
-				$this->db->or_like('f_lain', $v, 'BOTH');
+		if (
+			isset($data['f_km']) ||
+			isset($data['f_ac']) ||
+			isset($data['f_listrik']) ||
+			isset($data['f_tambahan_desc'])
+		) {
+			$this->db->group_start();
+			if (isset($data['f_km'])) { $this->db->where('f_kamar_mandi', 1); }
+			if (isset($data['f_ac'])) { $this->db->where('f_ac', 1); }
+			if (isset($data['f_listrik'])) { $this->db->where('f_listrik', 1); }
+			if (isset($data['f_tambahan_desc'])) {
+				foreach ($data['f_tambahan_desc'] as $k => $v) {
+					$this->db->or_like('f_lain', $v, 'BOTH');
+				}
 			}
+			$this->db->group_end();
 		}
-		$this->db->group_end();
 		$this->db->order_by('distance', 'asc');
 		$trans = $this->db->get('tb_indekos');
 		return $trans->result();
