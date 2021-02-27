@@ -177,7 +177,7 @@
 </div>
 <script type="text/javascript" charset="utf-8">
     Dropzone.autoDiscover = false;
-    let global_attachment = "<?= isset($kos->attachment) ? $kos->attachment : '' ?>";
+    let global_attachment = <?= isset($kos->attachment) ? $kos->attachment : '[]' ?>;
     let global_lat = "<?= isset($kos->lat_kos) ? $kos->lat_kos : '' ?>";
     let global_lng = "<?= isset($kos->lng_kos) ? $kos->lng_kos : '' ?>";
     let kos_marker;
