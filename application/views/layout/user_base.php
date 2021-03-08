@@ -554,7 +554,7 @@
 								</tr>
 								<tr>
 									<td>Tarif</td>
-									<td>: Rp. ${data.data[i].tarif_kos},-</td>
+									<td>: Rp. ${new Intl.NumberFormat('id-ID', { maximumSignificantDigits: 3 }).format(data.data[i].tarif_kos)},-</td>
 								</tr>
 							</table>
 					    <a href="#" class="btn btn-primary detil-popup-btn" style="color: white;" onClick="detilKos('${data.data[i].id_kos}')" data-id="${data.data[i].id_kos}"><i class="fas fa-search"></i></a>
@@ -653,7 +653,7 @@
 									</tr>
 									<tr>
 										<td>Tarif</td>
-										<td>: Rp. ${data.data[i].tarif_kos},-</td>
+										<td>: Rp. ${new Intl.NumberFormat('id-ID', { maximumSignificantDigits: 3 }).format(data.data[i].tarif_kos)},-</td>
 									</tr>
 								</table>
 						    <a href="#" class="btn btn-primary detil-popup-btn" style="color: white;" onClick="detilKos('${data.data[i].id_kos}')" data-id="${data.data[i].id_kos}"><i class="fas fa-search"></i></a>
@@ -709,7 +709,7 @@
 				    </tr>
 				    <tr>
 				      <td>Tarif</td>
-				      <td>: Rp. ${data.tarif_kos},-</td>
+				      <td>: Rp. ${new Intl.NumberFormat('id-ID', { maximumSignificantDigits: 3 }).format(data.tarif_kos)},-</td>
 				    </tr>
 				    <tr>
 				      <td>Gender</td>

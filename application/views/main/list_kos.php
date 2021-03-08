@@ -80,7 +80,13 @@
                 { data : 'nama_pemilik' },
                 { data : 'notelp_pemilik' },
                 { data : 'alamat_kos' },
-                { data : 'tarif_kos' },
+                {
+                    data : 'tarif_kos',
+                    render : (data, type, full) => {
+                        let html = new Intl.NumberFormat('id-ID', { maximumSignificantDigits: 3 }).format(data);
+                        return html
+                    },
+                },
                 {
                     data : 'id_kos',
                     render: (data, type, full) => {
